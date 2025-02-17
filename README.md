@@ -15,7 +15,7 @@ Echo of Titans é um jogo **boss rush** inspirado em **Titan Souls**, onde o jog
 git clone https://github.com/XuanDeveloper/echo-of-titans.git
 
 # Entre no diretório do projeto
-cd seuprojeto
+cd echo-of-titans
 
 # Abra com a Godot Engine
 ```
