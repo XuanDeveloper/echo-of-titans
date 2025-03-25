@@ -1,0 +1,43 @@
+[gd_scene load_steps=6 format=3 uid="uid://b36wwy7mmdmlj"]
+
+[ext_resource type="PackedScene" uid="uid://dt5r4t12ju1us" path="res://scenes/player/player.tscn" id="1_sp2kx"]
+[ext_resource type="Texture2D" uid="uid://cogkdebyjfrwy" path="res://assets/cenario/Ground texture.png" id="2_p4g5w"]
+[ext_resource type="Texture2D" uid="uid://b8cgtgpqiw4lv" path="res://assets/cenario/grama.png" id="3_viemq"]
+[ext_resource type="Texture2D" uid="uid://2ksuc2w0ib3l" path="res://assets/cenario/Tronco_2.png" id="4_21jp6"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_yn4y5"]
+radius = 208.134
+height = 1636.96
+
+[node name="fase1" type="Node2D"]
+
+[node name="Player" parent="." instance=ExtResource("1_sp2kx")]
+top_level = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(642, 362)
+scale = Vector2(0.538, 0.354)
+texture = ExtResource("2_p4g5w")
+
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+position = Vector2(475.875, 397.875)
+scale = Vector2(0.011125, 0.011125)
+texture = ExtResource("3_viemq")
+
+[node name="Sprite2D3" type="Sprite2D" parent="."]
+position = Vector2(536, 415)
+scale = Vector2(0.011125, 0.011125)
+texture = ExtResource("3_viemq")
+
+[node name="Area2D" type="Area2D" parent="."]
+position = Vector2(886, 392)
+rotation = 0.258808
+scale = Vector2(0.0314117, 0.0314117)
+
+[node name="Sprite2D" type="Sprite2D" parent="Area2D"]
+texture = ExtResource("4_21jp6")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(-123.104, 32.5902)
+rotation = 1.59254
+shape = SubResource("CapsuleShape2D_yn4y5")

@@ -1,6 +1,6 @@
-[gd_scene load_steps=9 format=3 uid="uid://sikalha3sfqx"]
+[gd_scene load_steps=9 format=3 uid="uid://bhdx47uewfucf"]
 
-[ext_resource type="Script" path="res://Scripts/projectile.gd" id="1_15xy7"]
+[ext_resource type="Script" path="res://scripts/player/projectile.gd" id="1_2nv5r"]
 [ext_resource type="Texture2D" uid="uid://ddyay8mqysp4k" path="res://assets/sprites/Blue Effect Bullet Impact Explosion 32x32.png" id="2_dhhj6"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8e3w7"]
@@ -43,7 +43,7 @@ animations = [{
 
 [node name="Projectile" type="Node2D"]
 position = Vector2(99, 91)
-script = ExtResource("1_15xy7")
+script = ExtResource("1_2nv5r")
 
 [node name="Area2D" type="Area2D" parent="."]
 position = Vector2(2, -1)
