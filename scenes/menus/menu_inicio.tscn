@@ -1,21 +1,87 @@
-[gd_scene load_steps=2 format=3 uid="uid://c1jc8qad6iobv"]
+[gd_scene load_steps=6 format=3 uid="uid://c1jc8qad6iobv"]
 
 [ext_resource type="Script" path="res://scripts/menuInicial/menu_inicio.gd" id="1_jp0j7"]
+[ext_resource type="FontFile" uid="uid://crr65edtviel7" path="res://assets/fonts/Rev Mini Pixel.ttf" id="2_3okrs"]
+[ext_resource type="Theme" uid="uid://c4f8jpv4pfwig" path="res://assets/ui/default_btn.tres" id="2_n8o62"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_dvs2k"]
+font = ExtResource("2_3okrs")
+font_size = 60
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_k1hag"]
 
 [node name="MenuInicio" type="Control"]
 layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
 script = ExtResource("1_jp0j7")
 
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.278431)
+
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -240.0
+offset_top = -59.0
+offset_right = 240.0
+offset_bottom = 59.0
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="Button" type="Button" parent="VBoxContainer"]
+[node name="Label" type="Label" parent="VBoxContainer"]
 layout_mode = 2
-text = "aaaaaa"
+text = "Echo of Titans"
+label_settings = SubResource("LabelSettings_dvs2k")
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
 
-[connection signal="pressed" from="VBoxContainer/Button" to="." method="_on_button_pressed"]
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/HBoxContainer"]
+clip_contents = true
+custom_minimum_size = Vector2(169, 50)
+layout_direction = 1
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 20
+
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxEmpty_k1hag")
+
+[node name="btn_play" type="Button" parent="VBoxContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.0
+theme = ExtResource("2_n8o62")
+text = "Jogar"
+
+[node name="btn_exit" type="Button" parent="VBoxContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.0
+theme = ExtResource("2_n8o62")
+text = "Sair
+"
+
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/VBoxContainer/btn_play" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/VBoxContainer/btn_exit" to="." method="_on_btn_exit_pressed"]

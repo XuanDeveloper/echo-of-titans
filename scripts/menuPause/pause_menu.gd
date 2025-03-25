@@ -1,18 +1,23 @@
-extends Control
+extends CanvasLayer
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pass # Replace with function body.
+	visible = false
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	pass
 
-
-func _on_button_pressed() -> void:
-	get_tree().change_scene_to_file("res://scenes/levels/fase_1.tscn")
+func _unhandled_input(event):
+	if event.is_action("ui_cancel"):
+		visible = true
+		get_tree().paused = true
+	
+func _on_btn_resume_pressed() -> void:
+	visible = false
+	get_tree().paused = false
 
 
 func _on_btn_exit_pressed() -> void:
