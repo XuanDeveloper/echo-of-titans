@@ -1,0 +1,57 @@
+[gd_scene load_steps=9 format=3 uid="uid://sikalha3sfqx"]
+
+[ext_resource type="Script" path="res://Scripts/projectile.gd" id="1_15xy7"]
+[ext_resource type="Texture2D" uid="uid://ddyay8mqysp4k" path="res://assets/sprites/Blue Effect Bullet Impact Explosion 32x32.png" id="2_dhhj6"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8e3w7"]
+atlas = ExtResource("2_dhhj6")
+region = Rect2(352, 96, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_37saj"]
+atlas = ExtResource("2_dhhj6")
+region = Rect2(384, 96, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r357a"]
+atlas = ExtResource("2_dhhj6")
+region = Rect2(416, 96, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y1j1o"]
+atlas = ExtResource("2_dhhj6")
+region = Rect2(448, 96, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_qpimo"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8e3w7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_37saj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r357a")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y1j1o")
+}],
+"loop": true,
+"name": &"basic",
+"speed": 15.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7k8ju"]
+
+[node name="Projectile" type="Node2D"]
+position = Vector2(99, 91)
+script = ExtResource("1_15xy7")
+
+[node name="Area2D" type="Area2D" parent="."]
+position = Vector2(2, -1)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Area2D"]
+sprite_frames = SubResource("SpriteFrames_qpimo")
+animation = &"basic"
+frame_progress = 0.581973
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_7k8ju")
