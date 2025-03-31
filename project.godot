@@ -13,6 +13,7 @@ config_version=5
 config/name="Echo of Titans"
 run/main_scene="res://scenes/menus/menu_inicio.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
+boot_splash/use_filter=false
 config/icon="res://icon.svg"
 
 [display]

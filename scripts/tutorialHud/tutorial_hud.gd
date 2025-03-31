@@ -4,7 +4,9 @@ var step = 0
 var tutorial_steps  = [
 	{"action": "Left", "message": "para andar para a esquerda"},
 	{"action": "Right", "message": "para andar para a direita"},
-	{"action": "dash", "message": "para pular"}
+	{"action": "Down", "message": "para andar para descer"},
+	{"action": "Up", "message": "para andar para subir"},
+	{"action": "dash", "message": " para dashar"}
 ]
 
 
@@ -30,7 +32,6 @@ func update_message():
 	$BackgroundBox.size = label_size + Vector2(40, 20)  # Adiciona margem
 	
 	# Centraliza o fundo em relação ao texto
-	$BackgroundBox.position = $TextWithKey/Label.position - Vector2(35, 10)
 	
 	$TextWithKey/Label.text = tutorial_steps[step]["message"]
 
