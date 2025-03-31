@@ -7,6 +7,7 @@
 
 [node name="pause_menu" type="CanvasLayer"]
 process_mode = 3
+visible = false
 script = ExtResource("1_0f57e")
 
 [node name="bg_overlay" type="ColorRect" parent="."]

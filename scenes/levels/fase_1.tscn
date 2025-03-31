@@ -1,14 +1,41 @@
-[gd_scene load_steps=7 format=3 uid="uid://b36wwy7mmdmlj"]
+[gd_scene load_steps=16 format=3 uid="uid://b36wwy7mmdmlj"]
 
 [ext_resource type="PackedScene" uid="uid://dt5r4t12ju1us" path="res://scenes/player/player.tscn" id="1_sp2kx"]
 [ext_resource type="Texture2D" uid="uid://cogkdebyjfrwy" path="res://assets/cenario/Ground texture.png" id="2_p4g5w"]
 [ext_resource type="Texture2D" uid="uid://b8cgtgpqiw4lv" path="res://assets/cenario/grama.png" id="3_viemq"]
 [ext_resource type="Texture2D" uid="uid://2ksuc2w0ib3l" path="res://assets/cenario/Tronco_2.png" id="4_21jp6"]
 [ext_resource type="PackedScene" uid="uid://cjw8c4wfo8vr8" path="res://scenes/menus/pause_menu.tscn" id="5_2trjc"]
+[ext_resource type="Script" path="res://scripts/tutorialHud/tutorial_hud.gd" id="6_bqax8"]
+[ext_resource type="Texture2D" uid="uid://dtj2022qcltvl" path="res://assets/ui/gdb-keyboard-2.png" id="7_4yt7w"]
+[ext_resource type="FontFile" uid="uid://crr65edtviel7" path="res://assets/fonts/Rev Mini Pixel.ttf" id="7_v5vox"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_yn4y5"]
 radius = 208.134
 height = 1636.96
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xdmb8"]
+atlas = ExtResource("7_4yt7w")
+region = Rect2(96.6861, 289.836, 15.7999, 15.5605)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k528m"]
+atlas = ExtResource("7_4yt7w")
+region = Rect2(64.2846, 289.357, 15.5605, 15.0817)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8gm6m"]
+atlas = ExtResource("7_4yt7w")
+region = Rect2(80.1301, 289.836, 16.0393, 14.8423)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0fe1u"]
+atlas = ExtResource("7_4yt7w")
+region = Rect2(99.8086, 321.915, 104.375, 15.0817)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cvg56"]
+atlas = ExtResource("7_4yt7w")
+region = Rect2(80.3782, 273.815, 16.0393, 14.1241)
+
+[sub_resource type="LabelSettings" id="LabelSettings_2bic6"]
+font = ExtResource("7_v5vox")
+font_size = 21
 
 [node name="fase1" type="Node2D"]
 
@@ -44,3 +71,74 @@ rotation = 1.59254
 shape = SubResource("CapsuleShape2D_yn4y5")
 
 [node name="pause_menu" parent="." instance=ExtResource("5_2trjc")]
+
+[node name="tutorial_hud" type="CanvasLayer" parent="."]
+script = ExtResource("6_bqax8")
+
+[node name="BackgroundBox" type="ColorRect" parent="tutorial_hud"]
+modulate = Color(1, 1, 1, 0.431373)
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -22.5
+offset_bottom = 22.5
+grow_vertical = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+color = Color(0.0923971, 0.0923971, 0.0923971, 1)
+
+[node name="TextWithKey" type="HBoxContainer" parent="tutorial_hud"]
+custom_minimum_size = Vector2(151, 0)
+layout_direction = 2
+offset_right = 510.0
+offset_bottom = 37.0
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.0
+
+[node name="d_sprite" type="TextureRect" parent="tutorial_hud/TextWithKey"]
+custom_minimum_size = Vector2(25, 25)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = SubResource("AtlasTexture_xdmb8")
+stretch_mode = 5
+
+[node name="a_sprite" type="TextureRect" parent="tutorial_hud/TextWithKey"]
+custom_minimum_size = Vector2(25, 25)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = SubResource("AtlasTexture_k528m")
+stretch_mode = 5
+
+[node name="s_sprite" type="TextureRect" parent="tutorial_hud/TextWithKey"]
+custom_minimum_size = Vector2(25, 25)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = SubResource("AtlasTexture_8gm6m")
+stretch_mode = 5
+
+[node name="space_sprite" type="TextureRect" parent="tutorial_hud/TextWithKey"]
+custom_minimum_size = Vector2(25, 25)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = SubResource("AtlasTexture_0fe1u")
+stretch_mode = 5
+
+[node name="w_sprite" type="TextureRect" parent="tutorial_hud/TextWithKey"]
+custom_minimum_size = Vector2(25, 25)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = SubResource("AtlasTexture_cvg56")
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="tutorial_hud/TextWithKey"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = " para andar para a esquerda"
+label_settings = SubResource("LabelSettings_2bic6")
+horizontal_alignment = 2
+vertical_alignment = 1
