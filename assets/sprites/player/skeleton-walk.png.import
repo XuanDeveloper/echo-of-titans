@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://2ksuc2w0ib3l"
-path="res://.godot/imported/Tronco_2.png-2f5e9ffbfdb4bd9017889a9fc0f81fc4.ctex"
+uid="uid://dd7yrcl5vxvqj"
+path="res://.godot/imported/skeleton-walk.png-fbd92a33f9664ab154ea11945cc5e637.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/cenario/Tronco_2.png"
-dest_files=["res://.godot/imported/Tronco_2.png-2f5e9ffbfdb4bd9017889a9fc0f81fc4.ctex"]
+source_file="res://assets/sprites/player/skeleton-walk.png"
+dest_files=["res://.godot/imported/skeleton-walk.png-fbd92a33f9664ab154ea11945cc5e637.ctex"]
 
 [params]
 

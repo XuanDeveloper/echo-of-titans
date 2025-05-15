@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cogkdebyjfrwy"
-path="res://.godot/imported/Ground texture.png-8b7ee7f641f56c4add25707e9c26cf2a.ctex"
+uid="uid://4uslso4iyf1a"
+path="res://.godot/imported/skeleton-idle.png-2d431e343baf24a9a757ed1d8d740dd9.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/cenario/Ground texture.png"
-dest_files=["res://.godot/imported/Ground texture.png-8b7ee7f641f56c4add25707e9c26cf2a.ctex"]
+source_file="res://assets/sprites/player/skeleton-idle.png"
+dest_files=["res://.godot/imported/skeleton-idle.png-2d431e343baf24a9a757ed1d8d740dd9.ctex"]
 
 [params]
 

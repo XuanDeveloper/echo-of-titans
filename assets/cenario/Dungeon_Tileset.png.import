@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://crh81o6cp7hcl"
-path="res://.godot/imported/Tronco_1.png-6211229480d9d583cdc8b1dce169e6ef.ctex"
+uid="uid://d3apia87uvg2j"
+path="res://.godot/imported/Dungeon_Tileset.png-af66e763d663d008b1bea986a3a8a228.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/cenario/Tronco_1.png"
-dest_files=["res://.godot/imported/Tronco_1.png-6211229480d9d583cdc8b1dce169e6ef.ctex"]
+source_file="res://assets/cenario/Dungeon_Tileset.png"
+dest_files=["res://.godot/imported/Dungeon_Tileset.png-af66e763d663d008b1bea986a3a8a228.ctex"]
 
 [params]
 
