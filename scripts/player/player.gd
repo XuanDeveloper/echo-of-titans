@@ -1,10 +1,11 @@
-extends CharacterBody2D
+extends CharacterBody2D 
 
 enum PlayerState { IDLE, RUN, DASH, ATTACK }
 
-var state: int = PlayerState.IDLE
 @export var projectile_scene: PackedScene
+var state: int = PlayerState.IDLE
 @onready var animation := $AnimatedSprite2D 
+var can_shoot: bool = true
 
 var speed: float = 400.0
 var dash_speed: float = 700.0
@@ -15,6 +16,7 @@ var cooldown_timer: float = 0.0
 var dash_direction: Vector2 = Vector2.ZERO
 
 func _ready():
+	add_to_group("player")
 	animation.play("Idle")
 
 func _physics_process(delta: float) -> void:
@@ -32,8 +34,7 @@ func _physics_process(delta: float) -> void:
 		
 	move_and_slide()
 	
-	# Check if the player pressed the shoot button
-	if Input.is_action_just_pressed("Shoot") and state != PlayerState.ATTACK:
+	if Input.is_action_just_pressed("Shoot") and state != PlayerState.ATTACK and can_shoot:
 		shoot()
 
 func process_movement(delta: float) -> void:
@@ -68,15 +69,21 @@ func process_dash(delta: float) -> void:
 		velocity = Vector2.ZERO
 
 func shoot():
-	if projectile_scene:
+	if projectile_scene and can_shoot:
 		var projectile = projectile_scene.instantiate()
-		projectile.global_position = global_position
-		projectile.direction = (get_global_mouse_position() - global_position).normalized()
-		get_parent().add_child(projectile)
 		
+		var head_offset = Vector2(0, -20)  # ajuste para sair da cabeça
+		projectile.global_position = global_position + head_offset
+		
+		projectile.direction = (get_global_mouse_position() - projectile.global_position).normalized()
+		projectile.player = self  # passa referência do player para o projétil
+		
+		get_tree().current_scene.add_child(projectile)
+		
+		can_shoot = false
 		state = PlayerState.ATTACK
 		animation.play("Attack")
-		
+
 		await animation.animation_finished
 		
 		if velocity.length() > 0:
@@ -85,3 +92,6 @@ func shoot():
 		else:
 			state = PlayerState.IDLE
 			animation.play("Idle")
+
+func recover_projectile():
+	can_shoot = true
