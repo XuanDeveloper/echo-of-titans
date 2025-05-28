@@ -6,7 +6,7 @@ var tutorial_steps  = [
 	{"action": "Right", "message": "para andar para a direita"},
 	{"action": "Down", "message": "para andar para descer"},
 	{"action": "Up", "message": "para andar para subir"},
-	{"action": "dash", "message": " para dashar"}
+	{"action": "dash", "message": " dash"}
 ]
 
 

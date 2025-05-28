@@ -1,14 +1,21 @@
-[gd_scene load_steps=6 format=3 uid="uid://c1jc8qad6iobv"]
+[gd_scene load_steps=10 format=3 uid="uid://c1jc8qad6iobv"]
 
 [ext_resource type="Script" path="res://scripts/menuInicial/menu_inicio.gd" id="1_jp0j7"]
 [ext_resource type="FontFile" uid="uid://crr65edtviel7" path="res://assets/fonts/Rev Mini Pixel.ttf" id="2_3okrs"]
-[ext_resource type="Theme" uid="uid://c4f8jpv4pfwig" path="res://assets/ui/default_btn.tres" id="2_n8o62"]
+[ext_resource type="Texture2D" uid="uid://b2o40utf5xs0k" path="res://assets/ui/TopPatternBG_116x67.png" id="4_q5d0u"]
+[ext_resource type="Texture2D" uid="uid://r2x2s2n2q1vs" path="res://assets/ui/BottomPatternBG_128x112.png" id="5_j5ic2"]
+[ext_resource type="Texture2D" uid="uid://buyql2geha8h7" path="res://assets/ui/Button_52x14.png" id="6_ce3hh"]
+[ext_resource type="Texture2D" uid="uid://cnp0vn3ec3tha" path="res://assets/ui/HighlightButton_60x23.png" id="7_vtcbn"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_dvs2k"]
 font = ExtResource("2_3okrs")
 font_size = 60
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_k1hag"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_8ptxo"]
+font = ExtResource("2_3okrs")
+font_size = 24
 
 [node name="MenuInicio" type="Control"]
 layout_mode = 3
@@ -19,6 +26,38 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
 script = ExtResource("1_jp0j7")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRectTop" type="TextureRect" parent="Panel"]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 367.0
+grow_horizontal = 2
+texture = ExtResource("4_q5d0u")
+
+[node name="TextureRectBottom" type="TextureRect" parent="Panel"]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -2.0
+offset_top = -309.0
+offset_right = -2.0
+offset_bottom = 3.0
+grow_horizontal = 2
+grow_vertical = 0
+texture = ExtResource("5_j5ic2")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 layout_mode = 1
@@ -52,36 +91,86 @@ vertical_alignment = 1
 uppercase = true
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 9)
 layout_mode = 2
 size_flags_horizontal = 4
 alignment = 1
 
 [node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/HBoxContainer"]
-clip_contents = true
 custom_minimum_size = Vector2(169, 50)
 layout_direction = 1
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_constants/separation = 20
+theme_override_constants/separation = 21
 
 [node name="HSeparator" type="HSeparator" parent="VBoxContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_styles/separator = SubResource("StyleBoxEmpty_k1hag")
 
-[node name="btn_play" type="Button" parent="VBoxContainer/HBoxContainer/VBoxContainer"]
+[node name="btn_play" type="TextureButton" parent="VBoxContainer/HBoxContainer/VBoxContainer"]
+texture_filter = 1
+custom_minimum_size = Vector2(7, 51)
 layout_mode = 2
 size_flags_vertical = 3
-size_flags_stretch_ratio = 0.0
-theme = ExtResource("2_n8o62")
-text = "Jogar"
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource("6_ce3hh")
+stretch_mode = 0
 
-[node name="btn_exit" type="Button" parent="VBoxContainer/HBoxContainer/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-size_flags_stretch_ratio = 0.0
-theme = ExtResource("2_n8o62")
-text = "Sair
+[node name="LabelExit" type="Label" parent="VBoxContainer/HBoxContainer/VBoxContainer/btn_play"]
+layout_mode = 0
+offset_left = 40.0
+offset_top = 15.0
+offset_right = 136.0
+offset_bottom = 41.0
+text = "Jogar
 "
+label_settings = SubResource("LabelSettings_8ptxo")
+horizontal_alignment = 1
 
-[connection signal="pressed" from="VBoxContainer/HBoxContainer/VBoxContainer/btn_play" to="." method="_on_button_pressed"]
+[node name="HighlightPlay" type="TextureButton" parent="VBoxContainer/HBoxContainer/VBoxContainer/btn_play"]
+texture_filter = 1
+layout_mode = 0
+offset_left = -18.0
+offset_top = -2.0
+offset_right = 196.0
+offset_bottom = 53.0
+mouse_filter = 2
+texture_normal = ExtResource("7_vtcbn")
+stretch_mode = 0
+
+[node name="btn_exit" type="TextureButton" parent="VBoxContainer/HBoxContainer/VBoxContainer"]
+texture_filter = 1
+custom_minimum_size = Vector2(7, 51)
+layout_mode = 2
+size_flags_vertical = 3
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource("6_ce3hh")
+stretch_mode = 0
+
+[node name="LabelExit" type="Label" parent="VBoxContainer/HBoxContainer/VBoxContainer/btn_exit"]
+layout_mode = 0
+offset_left = 40.0
+offset_top = 15.0
+offset_right = 136.0
+offset_bottom = 41.0
+text = "Sair"
+label_settings = SubResource("LabelSettings_8ptxo")
+horizontal_alignment = 1
+
+[node name="HighlightExit" type="TextureButton" parent="VBoxContainer/HBoxContainer/VBoxContainer/btn_exit"]
+texture_filter = 1
+layout_mode = 0
+offset_left = -18.0
+offset_top = -2.0
+offset_right = 196.0
+offset_bottom = 53.0
+mouse_filter = 2
+texture_normal = ExtResource("7_vtcbn")
+stretch_mode = 0
+
+[connection signal="mouse_entered" from="VBoxContainer/HBoxContainer/VBoxContainer/btn_play" to="." method="_on_btn_play_mouse_entered"]
+[connection signal="mouse_exited" from="VBoxContainer/HBoxContainer/VBoxContainer/btn_play" to="." method="_on_btn_play_mouse_exited"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/VBoxContainer/btn_play" to="." method="_on_btn_play_pressed"]
+[connection signal="mouse_entered" from="VBoxContainer/HBoxContainer/VBoxContainer/btn_exit" to="." method="_on_btn_exit_mouse_entered"]
+[connection signal="mouse_exited" from="VBoxContainer/HBoxContainer/VBoxContainer/btn_exit" to="." method="_on_btn_exit_mouse_exited"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/VBoxContainer/btn_exit" to="." method="_on_btn_exit_pressed"]
