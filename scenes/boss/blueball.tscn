@@ -1,6 +1,6 @@
 [gd_scene load_steps=10 format=3 uid="uid://cg82lbx7iu5qt"]
 
-[ext_resource type="Script" path="res://scenes/boss/blue_ball.gd" id="1_ka1r8"]
+[ext_resource type="Script" path="res://scripts/boss/blue_ball.gd" id="1_ka1r8"]
 [ext_resource type="Texture2D" uid="uid://sq01ghhahn3l" path="res://assets/sprites/boss/BlueBall-spritesheet.png" id="1_xh63j"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_pn8jp"]

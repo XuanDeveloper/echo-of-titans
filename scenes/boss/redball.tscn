@@ -1,6 +1,6 @@
 [gd_scene load_steps=10 format=3 uid="uid://fnwiw7fguy1b"]
 
-[ext_resource type="Script" path="res://scenes/boss/red_ball.gd" id="1_iuwq2"]
+[ext_resource type="Script" path="res://scripts/boss/red_ball.gd" id="1_iuwq2"]
 [ext_resource type="Texture2D" uid="uid://d001qtfjk0uyc" path="res://assets/sprites/boss/RedBall-spritesheet.png" id="1_t3cv8"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xdtj0"]

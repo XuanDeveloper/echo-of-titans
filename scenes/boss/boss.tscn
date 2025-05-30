@@ -1,6 +1,6 @@
 [gd_scene load_steps=11 format=3 uid="uid://bcfdhfiilsp2v"]
 
-[ext_resource type="Script" path="res://scenes/boss/boss.gd" id="1_ywuht"]
+[ext_resource type="Script" path="res://scripts/boss/boss.gd" id="1_ywuht"]
 [ext_resource type="Texture2D" uid="uid://cidp1b4sh3org" path="res://assets/sprites/boss/boss.png" id="2_rukct"]
 [ext_resource type="Texture2D" uid="uid://bgnt7xj1irbnv" path="res://assets/sprites/boss/bossShield.png" id="5_yadqn"]
 
