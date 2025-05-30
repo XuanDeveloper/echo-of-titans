@@ -1,0 +1,63 @@
+[gd_scene load_steps=10 format=3 uid="uid://fnwiw7fguy1b"]
+
+[ext_resource type="Script" path="res://scenes/boss/red_ball.gd" id="1_iuwq2"]
+[ext_resource type="Texture2D" uid="uid://d001qtfjk0uyc" path="res://assets/sprites/boss/RedBall-spritesheet.png" id="1_t3cv8"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xdtj0"]
+atlas = ExtResource("1_t3cv8")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t1nms"]
+atlas = ExtResource("1_t3cv8")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r65kr"]
+atlas = ExtResource("1_t3cv8")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qk4mh"]
+atlas = ExtResource("1_t3cv8")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ux4eq"]
+atlas = ExtResource("1_t3cv8")
+region = Rect2(0, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jhwwd"]
+atlas = ExtResource("1_t3cv8")
+region = Rect2(64, 64, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_x266l"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xdtj0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t1nms")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r65kr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qk4mh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ux4eq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jhwwd")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 12.0
+}]
+
+[node name="Redball" type="Node2D"]
+script = ExtResource("1_iuwq2")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+scale = Vector2(0.75, 0.75)
+sprite_frames = SubResource("SpriteFrames_x266l")
+animation = &"idle"

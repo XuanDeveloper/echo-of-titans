@@ -1,111 +1,8 @@
-[gd_scene load_steps=28 format=3 uid="uid://bcfdhfiilsp2v"]
+[gd_scene load_steps=11 format=3 uid="uid://bcfdhfiilsp2v"]
 
 [ext_resource type="Script" path="res://scenes/boss/boss.gd" id="1_ywuht"]
 [ext_resource type="Texture2D" uid="uid://cidp1b4sh3org" path="res://assets/sprites/boss/boss.png" id="2_rukct"]
-[ext_resource type="Script" path="res://scenes/boss/Ball.gd" id="3_cy8ov"]
-[ext_resource type="Texture2D" uid="uid://sq01ghhahn3l" path="res://assets/sprites/boss/BlueBall-spritesheet.png" id="3_nqotu"]
-[ext_resource type="Texture2D" uid="uid://d001qtfjk0uyc" path="res://assets/sprites/boss/RedBall-spritesheet.png" id="4_xvpf2"]
 [ext_resource type="Texture2D" uid="uid://bgnt7xj1irbnv" path="res://assets/sprites/boss/bossShield.png" id="5_yadqn"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_pn8jp"]
-atlas = ExtResource("3_nqotu")
-region = Rect2(0, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ht30o"]
-atlas = ExtResource("3_nqotu")
-region = Rect2(64, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_akit8"]
-atlas = ExtResource("3_nqotu")
-region = Rect2(128, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_3sxl1"]
-atlas = ExtResource("3_nqotu")
-region = Rect2(192, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_c0xdr"]
-atlas = ExtResource("3_nqotu")
-region = Rect2(0, 64, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_kswfe"]
-atlas = ExtResource("3_nqotu")
-region = Rect2(64, 64, 64, 64)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_ihp5e"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_pn8jp")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_ht30o")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_akit8")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_3sxl1")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_c0xdr")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_kswfe")
-}],
-"loop": true,
-"name": &"idle",
-"speed": 12.0
-}]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_xdtj0"]
-atlas = ExtResource("4_xvpf2")
-region = Rect2(0, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_t1nms"]
-atlas = ExtResource("4_xvpf2")
-region = Rect2(64, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_r65kr"]
-atlas = ExtResource("4_xvpf2")
-region = Rect2(128, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_qk4mh"]
-atlas = ExtResource("4_xvpf2")
-region = Rect2(192, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ux4eq"]
-atlas = ExtResource("4_xvpf2")
-region = Rect2(0, 64, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_jhwwd"]
-atlas = ExtResource("4_xvpf2")
-region = Rect2(64, 64, 64, 64)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_0h4jo"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_xdtj0")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_t1nms")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_r65kr")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_qk4mh")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_ux4eq")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_jhwwd")
-}],
-"loop": true,
-"name": &"idle",
-"speed": 12.0
-}]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_v7psg"]
 atlas = ExtResource("5_yadqn")
@@ -163,28 +60,6 @@ script = ExtResource("1_ywuht")
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1
 texture = ExtResource("2_rukct")
-
-[node name="BlueBall" type="Node2D" parent="."]
-script = ExtResource("3_cy8ov")
-
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="BlueBall"]
-texture_filter = 1
-position = Vector2(45, -12)
-scale = Vector2(0.75, 0.75)
-sprite_frames = SubResource("SpriteFrames_ihp5e")
-animation = &"idle"
-frame_progress = 0.543551
-
-[node name="RedBall" type="Node2D" parent="."]
-script = ExtResource("3_cy8ov")
-
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="RedBall"]
-texture_filter = 1
-position = Vector2(-45, -12)
-scale = Vector2(0.75, 0.75)
-sprite_frames = SubResource("SpriteFrames_0h4jo")
-animation = &"idle"
-frame_progress = 0.975571
 
 [node name="Shield" type="Node2D" parent="."]
 

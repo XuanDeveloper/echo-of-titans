@@ -4,6 +4,7 @@ enum PlayerState { IDLE, RUN, DASH, ATTACK }
 
 @export var projectile_scene: PackedScene
 var state: int = PlayerState.IDLE
+@export var boss_path: NodePath
 @onready var animation := $AnimatedSprite2D 
 var can_shoot: bool = true
 

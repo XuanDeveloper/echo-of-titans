@@ -1,7 +1,9 @@
-[gd_scene load_steps=20 format=4 uid="uid://b36wwy7mmdmlj"]
+[gd_scene load_steps=22 format=4 uid="uid://b36wwy7mmdmlj"]
 
 [ext_resource type="PackedScene" uid="uid://bcfdhfiilsp2v" path="res://scenes/boss/boss.tscn" id="1_kow2a"]
 [ext_resource type="PackedScene" uid="uid://dt5r4t12ju1us" path="res://scenes/player/player.tscn" id="1_sp2kx"]
+[ext_resource type="PackedScene" uid="uid://fnwiw7fguy1b" path="res://scenes/boss/redball.tscn" id="2_s4qdg"]
+[ext_resource type="PackedScene" uid="uid://cg82lbx7iu5qt" path="res://scenes/boss/blueball.tscn" id="3_uajt4"]
 [ext_resource type="PackedScene" uid="uid://cjw8c4wfo8vr8" path="res://scenes/menus/pause_menu.tscn" id="5_2trjc"]
 [ext_resource type="Script" path="res://scripts/tutorialHud/tutorial_hud.gd" id="6_bqax8"]
 [ext_resource type="Texture2D" uid="uid://d3apia87uvg2j" path="res://assets/cenario/Dungeon_Tileset.png" id="6_yk0cq"]
@@ -377,9 +379,18 @@ top_level = true
 position = Vector2(588, 339)
 scale = Vector2(1.5, 1.5)
 
+[node name="Redball" parent="." instance=ExtResource("2_s4qdg")]
+top_level = true
+position = Vector2(-32, 124)
+
+[node name="Blueball" parent="." instance=ExtResource("3_uajt4")]
+top_level = true
+position = Vector2(-32, 155)
+
 [node name="Player" parent="." instance=ExtResource("1_sp2kx")]
 top_level = true
 position = Vector2(328, 367)
+boss_path = NodePath("../Boss")
 
 [node name="pause_menu" parent="." instance=ExtResource("5_2trjc")]
 
