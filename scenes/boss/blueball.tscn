@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://cg82lbx7iu5qt"]
+[gd_scene load_steps=11 format=3 uid="uid://epvhqgt6qf3a"]
 
 [ext_resource type="Script" path="res://scripts/boss/blue_ball.gd" id="1_ka1r8"]
 [ext_resource type="Texture2D" uid="uid://sq01ghhahn3l" path="res://assets/sprites/boss/BlueBall-spritesheet.png" id="1_xh63j"]
@@ -57,6 +57,7 @@ animations = [{
 radius = 11.0454
 
 [node name="Blueball" type="Area2D"]
+top_level = true
 script = ExtResource("1_ka1r8")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]

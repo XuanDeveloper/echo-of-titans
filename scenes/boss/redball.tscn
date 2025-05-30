@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://fnwiw7fguy1b"]
+[gd_scene load_steps=11 format=3 uid="uid://dr85s0e2ysk0y"]
 
 [ext_resource type="Script" path="res://scripts/boss/red_ball.gd" id="1_iuwq2"]
 [ext_resource type="Texture2D" uid="uid://d001qtfjk0uyc" path="res://assets/sprites/boss/RedBall-spritesheet.png" id="1_t3cv8"]
@@ -57,6 +57,7 @@ animations = [{
 radius = 11.0
 
 [node name="Redball" type="Area2D"]
+top_level = true
 script = ExtResource("1_iuwq2")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
