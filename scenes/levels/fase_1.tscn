@@ -1,5 +1,6 @@
 [gd_scene load_steps=22 format=4 uid="uid://b36wwy7mmdmlj"]
 
+[ext_resource type="PackedScene" uid="uid://bcfdhfiilsp2v" path="res://scenes/boss/boss.tscn" id="1_kow2a"]
 [ext_resource type="PackedScene" uid="uid://dt5r4t12ju1us" path="res://scenes/player/player.tscn" id="1_sp2kx"]
 [ext_resource type="PackedScene" uid="uid://cjw8c4wfo8vr8" path="res://scenes/menus/pause_menu.tscn" id="5_2trjc"]
 [ext_resource type="Script" uid="uid://m3stdy2ism3i" path="res://scripts/tutorialHud/tutorial_hud.gd" id="6_bqax8"]
@@ -387,8 +388,15 @@ position = Vector2(-11, 48)
 metadata/_edit_vertical_guides_ = [112.0, 991.0, 497.0, 623.0]
 metadata/_edit_horizontal_guides_ = [-1084.0]
 
+[node name="Boss" parent="." instance=ExtResource("1_kow2a")]
+top_level = true
+position = Vector2(588, 339)
+scale = Vector2(1.5, 1.5)
+
 [node name="Player" parent="." instance=ExtResource("1_sp2kx")]
 top_level = true
+position = Vector2(328, 367)
+boss_path = NodePath("../Boss")
 
 [node name="pause_menu" parent="." instance=ExtResource("5_2trjc")]
 visible = false

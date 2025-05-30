@@ -1,3 +1,70 @@
-[gd_scene format=3 uid="uid://bcfdhfiilsp2v"]
+[gd_scene load_steps=11 format=3 uid="uid://bcfdhfiilsp2v"]
+
+[ext_resource type="Script" path="res://scripts/boss/boss.gd" id="1_ywuht"]
+[ext_resource type="Texture2D" uid="uid://cidp1b4sh3org" path="res://assets/sprites/boss/boss.png" id="2_rukct"]
+[ext_resource type="Texture2D" uid="uid://bgnt7xj1irbnv" path="res://assets/sprites/boss/bossShield.png" id="5_yadqn"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v7psg"]
+atlas = ExtResource("5_yadqn")
+region = Rect2(0, 0, 80, 80)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8gigl"]
+atlas = ExtResource("5_yadqn")
+region = Rect2(80, 0, 80, 80)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8be8q"]
+atlas = ExtResource("5_yadqn")
+region = Rect2(160, 0, 80, 80)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qqvpm"]
+atlas = ExtResource("5_yadqn")
+region = Rect2(0, 80, 80, 80)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ch3r0"]
+atlas = ExtResource("5_yadqn")
+region = Rect2(80, 80, 80, 80)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ri4lk"]
+atlas = ExtResource("5_yadqn")
+region = Rect2(160, 80, 80, 80)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_2q5kw"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v7psg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8gigl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8be8q")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qqvpm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ch3r0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ri4lk")
+}],
+"loop": true,
+"name": &"default",
+"speed": 1.0
+}]
 
 [node name="Boss" type="Node2D"]
+script = ExtResource("1_ywuht")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+texture = ExtResource("2_rukct")
+
+[node name="Shield" type="Node2D" parent="."]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Shield"]
+texture_filter = 1
+texture_repeat = 1
+sprite_frames = SubResource("SpriteFrames_2q5kw")
+frame_progress = 0.251188

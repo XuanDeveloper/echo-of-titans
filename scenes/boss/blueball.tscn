@@ -1,0 +1,69 @@
+[gd_scene load_steps=11 format=3 uid="uid://cg82lbx7iu5qt"]
+
+[ext_resource type="Script" path="res://scripts/boss/blue_ball.gd" id="1_ka1r8"]
+[ext_resource type="Texture2D" uid="uid://sq01ghhahn3l" path="res://assets/sprites/boss/BlueBall-spritesheet.png" id="1_xh63j"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pn8jp"]
+atlas = ExtResource("1_xh63j")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ht30o"]
+atlas = ExtResource("1_xh63j")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_akit8"]
+atlas = ExtResource("1_xh63j")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3sxl1"]
+atlas = ExtResource("1_xh63j")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c0xdr"]
+atlas = ExtResource("1_xh63j")
+region = Rect2(0, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kswfe"]
+atlas = ExtResource("1_xh63j")
+region = Rect2(64, 64, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_b3mik"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pn8jp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ht30o")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_akit8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3sxl1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c0xdr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kswfe")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 12.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_h2f74"]
+radius = 11.0454
+
+[node name="Blueball" type="Area2D"]
+script = ExtResource("1_ka1r8")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+scale = Vector2(0.75, 0.75)
+sprite_frames = SubResource("SpriteFrames_b3mik")
+animation = &"idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_h2f74")
