@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://fnwiw7fguy1b"]
+[gd_scene load_steps=11 format=3 uid="uid://fnwiw7fguy1b"]
 
 [ext_resource type="Script" path="res://scripts/boss/red_ball.gd" id="1_iuwq2"]
 [ext_resource type="Texture2D" uid="uid://d001qtfjk0uyc" path="res://assets/sprites/boss/RedBall-spritesheet.png" id="1_t3cv8"]
@@ -53,7 +53,10 @@ animations = [{
 "speed": 12.0
 }]
 
-[node name="Redball" type="Node2D"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_urjqj"]
+radius = 11.0
+
+[node name="Redball" type="Area2D"]
 script = ExtResource("1_iuwq2")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -61,3 +64,6 @@ texture_filter = 1
 scale = Vector2(0.75, 0.75)
 sprite_frames = SubResource("SpriteFrames_x266l")
 animation = &"idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_urjqj")
