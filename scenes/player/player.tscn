@@ -1,6 +1,6 @@
 [gd_scene load_steps=27 format=3 uid="uid://dt5r4t12ju1us"]
 
-[ext_resource type="Script" path="res://scripts/player/player.gd" id="1_m166b"]
+[ext_resource type="Script" uid="uid://bdgaa7afyxi47" path="res://scripts/player/player.gd" id="1_m166b"]
 [ext_resource type="PackedScene" uid="uid://dnus0mf8eekit" path="res://scenes/player/head.tscn" id="2_oqhy5"]
 [ext_resource type="Texture2D" uid="uid://dbi5p6y86dmdy" path="res://assets/sprites/ATTACK 1.png" id="2_vmisn"]
 [ext_resource type="Texture2D" uid="uid://nfme28vly5hf" path="res://assets/sprites/RUN.png" id="4_dxovg"]
@@ -157,11 +157,10 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fc2bp"]
-size = Vector2(13, 30)
+size = Vector2(13, 18)
 
 [node name="Player" type="CharacterBody2D"]
-position = Vector2(642, 367)
-collision_mask = 3
+position = Vector2(543, 409)
 script = ExtResource("1_m166b")
 projectile_scene = ExtResource("2_oqhy5")
 
@@ -174,13 +173,14 @@ frame = 1
 frame_progress = 0.581619
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0.5, 9)
+position = Vector2(0, 15)
 shape = SubResource("RectangleShape2D_fc2bp")
 
 [node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(2, 0)
+scale = Vector2(-0.288957, -0.718071)
 zoom = Vector2(1.5, 1.5)
-limit_left = 0
-limit_top = 0
-limit_right = 1080
-limit_bottom = 720
-limit_smoothed = true
+limit_left = 81
+limit_top = -1085
+limit_right = 1024
+limit_bottom = 630
