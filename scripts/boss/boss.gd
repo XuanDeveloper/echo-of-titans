@@ -10,33 +10,37 @@ var player_ref: Node2D = null
 func _ready():
 	player_ref = get_node(player_path)
 	spawn_balls()
+	
+	# EXEMPLO: inicia ataque a cada 2 segundos aumentando dificuldade (para testar)
+	var ball_timer = Timer.new()
+	ball_timer.wait_time = 2.0
+	ball_timer.one_shot = false
+	ball_timer.autostart = true
+	add_child(ball_timer)
+	ball_timer.timeout.connect(_on_attack_timer)
 
 func spawn_balls():
-	print("Chamando spawn_balls") # 👈 Adicione este print!
-	
-	if blue_ball_scene:
-		var blue_ball = blue_ball_scene.instantiate()
-		print("Instanciando blue_ball:", blue_ball) # 👈
-		blue_ball.global_position = global_position + Vector2(50, 0)
-		blue_ball.boss_ref = self
-		get_tree().current_scene.add_child(blue_ball)
-		balls.append(blue_ball)
-	else:
-		print("blue_ball_scene está nulo!") # 👈
+	var blue_ball = blue_ball_scene.instantiate()
+	blue_ball.global_position = global_position + Vector2(50, 0)
+	blue_ball.boss_ref = self # IMPORTANTE!
+	blue_ball.home_offset = Vector2(50, 0)
+	get_parent().call_deferred("add_child", blue_ball)
+	balls.append(blue_ball)
 
-	if red_ball_scene:
-		var red_ball = red_ball_scene.instantiate()
-		print("Instanciando red_ball:", red_ball) # 👈
-		red_ball.global_position = global_position + Vector2(-50, 0)
-		red_ball.boss_ref = self
-		get_tree().current_scene.add_child(red_ball)
-		balls.append(red_ball)
-	else:
-		print("red_ball_scene está nulo!") # 👈
+	var red_ball = red_ball_scene.instantiate()
+	red_ball.global_position = global_position + Vector2(-50, 0)
+	red_ball.boss_ref = self
+	red_ball.home_offset = Vector2(-50, 0)
+	get_parent().call_deferred("add_child", red_ball)
+	balls.append(red_ball)
 
-func _process(delta):
-	if not player_ref:
-		return
-	for bola in balls:
-		if bola:
-			bola.set_player_position(player_ref.global_position)
+var dificuldade := 3
+
+func _on_attack_timer():
+	print("Disparando ataque! Dificuldade atual: ", dificuldade)
+	if balls.size() >= 1:
+		balls[0].trigger_attack(dificuldade)
+		await get_tree().create_timer(0.5).timeout
+	if balls.size() >= 2:
+		balls[1].trigger_attack(dificuldade)
+	# dificuldade só aumenta se você quiser (automatize depois se desejar)

@@ -1,18 +1,80 @@
-# BlueBall.gd  OU  RedBall.gd
 extends Area2D
 
+enum State { IDLE, ATTACK, RETURN }
+
+@export var speed: float = 250.0
+@export var home_offset: Vector2 = Vector2(50, 0)
+@export var overshoot_distance: float = 80.0
+@onready var animation := $AnimatedSprite2D 
 var boss_ref: Node2D = null
-var target_player_position: Vector2
-@export var speed: float = 100.0
+var player_ref: Node2D = null
 
-func set_player_position(pos: Vector2):
-	target_player_position = pos
-
-func _process(delta):
-	if target_player_position == null:
-		return
-	var direction = (target_player_position - global_position).normalized()
-	global_position += direction * speed * delta
+var state: State = State.IDLE
+var home_position: Vector2
+var attacks_to_do: int = 1
+var attacks_done: int = 0
+var target_position: Vector2
 
 func _ready():
-	print("BlueBall spawnada em: ", global_position)
+	assert(boss_ref != null)
+	player_ref = boss_ref.player_ref
+	animation.play("idle")
+	update_home()
+	global_position = home_position
+	go_idle()
+
+func update_home():
+	home_position = boss_ref.global_position + home_offset
+
+func go_idle():
+	update_home()
+	state = State.IDLE
+	global_position = home_position
+	attacks_done = 0
+	attacks_to_do = 1
+	# animação de idle se quiser
+
+func trigger_attack(n_steps: int):
+	if state != State.IDLE:
+		return
+	attacks_to_do = n_steps
+	attacks_done = 0
+	state = State.ATTACK
+	set_next_attack_target()
+	# animação de ataque se quiser
+
+func set_next_attack_target():
+	var to_player = player_ref.global_position - global_position
+	if to_player.length() > 0:
+		var overshoot = to_player.normalized() * overshoot_distance
+		target_position = player_ref.global_position + overshoot
+	else:
+		target_position = player_ref.global_position
+
+func go_return():
+	state = State.RETURN
+	# animação de retorno se quiser
+
+func _physics_process(delta):
+	match state:
+		State.IDLE:
+			pass
+		State.ATTACK:
+			var direction = (target_position - global_position)
+			if direction.length() < speed * delta:
+				global_position = target_position
+				attacks_done += 1
+				if attacks_done < attacks_to_do:
+					set_next_attack_target() # registra novo alvo do player
+				else:
+					go_return()
+			else:
+				global_position += direction.normalized() * speed * delta
+		State.RETURN:
+			update_home()
+			var direction = (home_position - global_position)
+			if direction.length() < speed * delta:
+				global_position = home_position
+				go_idle()
+			else:
+				global_position += direction.normalized() * speed * delta

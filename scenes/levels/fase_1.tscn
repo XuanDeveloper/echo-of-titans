@@ -392,6 +392,7 @@ metadata/_edit_horizontal_guides_ = [-1084.0]
 top_level = true
 position = Vector2(559, -836)
 scale = Vector2(1.5, 1.5)
+player_path = NodePath("../Player")
 
 [node name="Player" parent="." instance=ExtResource("1_sp2kx")]
 top_level = true
