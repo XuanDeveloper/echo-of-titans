@@ -3,13 +3,20 @@ extends Node2D
 @export var blue_ball_scene: PackedScene
 @export var red_ball_scene: PackedScene
 @export var player_path: NodePath = "Player"
+@export var shield_path: NodePath = "Shield"
 
+var escudo: Area2D = null
+var dificuldade := 1
 var balls := []
 var player_ref: Node2D = null
 
 func _ready():
 	player_ref = get_node(player_path)
 	spawn_balls()
+	escudo = get_node(shield_path)
+	if escudo:
+		escudo.connect("shield_hit", _on_shield_hit)
+		escudo.connect("shield_broken", _on_shield_broken)
 	
 	# EXEMPLO: inicia ataque a cada 2 segundos aumentando dificuldade (para testar)
 	var ball_timer = Timer.new()
@@ -34,7 +41,13 @@ func spawn_balls():
 	get_parent().call_deferred("add_child", red_ball)
 	balls.append(red_ball)
 
-var dificuldade := 3
+func _on_shield_hit():
+	dificuldade += 1
+	print("Escudo tomou hit, dificuldade = ", dificuldade)
+
+func _on_shield_broken():
+	dificuldade += 1
+	print("Escudo quebrou! Dificuldade = ", dificuldade)
 
 func _on_attack_timer():
 	print("Disparando ataque! Dificuldade atual: ", dificuldade)

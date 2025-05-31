@@ -1,10 +1,15 @@
-[gd_scene load_steps=13 format=3 uid="uid://bcfdhfiilsp2v"]
+[gd_scene load_steps=15 format=3 uid="uid://bcfdhfiilsp2v"]
 
 [ext_resource type="Script" path="res://scripts/boss/boss.gd" id="1_ywuht"]
 [ext_resource type="Texture2D" uid="uid://cidp1b4sh3org" path="res://assets/sprites/boss/boss.png" id="2_rukct"]
 [ext_resource type="PackedScene" uid="uid://epvhqgt6qf3a" path="res://scenes/boss/blueball.tscn" id="2_wpisl"]
 [ext_resource type="PackedScene" uid="uid://dr85s0e2ysk0y" path="res://scenes/boss/redball.tscn" id="3_4prpw"]
+[ext_resource type="Script" path="res://scenes/boss/shield.gd" id="5_lfhq7"]
 [ext_resource type="Texture2D" uid="uid://bgnt7xj1irbnv" path="res://assets/sprites/boss/bossShield.png" id="5_yadqn"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_058ec"]
+radius = 22.0
+height = 76.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_v7psg"]
 atlas = ExtResource("5_yadqn")
@@ -65,7 +70,11 @@ red_ball_scene = ExtResource("3_4prpw")
 texture_filter = 1
 texture = ExtResource("2_rukct")
 
-[node name="Shield" type="Node2D" parent="."]
+[node name="Shield" type="Area2D" parent="." groups=["boss_shield"]]
+script = ExtResource("5_lfhq7")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Shield"]
+shape = SubResource("CapsuleShape2D_058ec")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Shield"]
 texture_filter = 1

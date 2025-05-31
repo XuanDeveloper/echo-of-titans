@@ -11,6 +11,7 @@ var bounce_count: int = 0
 @onready var wall_ray := $WallRay
 
 func _ready():
+	connect("area_entered", _on_area_entered)
 	# Garantir que os sinais estão conectados
 	if not is_connected("body_entered", _on_body_entered):
 		connect("body_entered", _on_body_entered)
@@ -50,6 +51,18 @@ func _physics_process(delta):
 			is_moving = false
 			velocity = Vector2.ZERO
 
+func _on_area_entered(area):
+	print("Área entrou em contato: ", area.name)
+	if area.is_in_group("boss_shield"):
+		print("Acertou o escudo do boss!")
+		if area.has_method("hit"):
+			area.hit()
+		
+		# Rebote (igual parede): use posição relativa para normal, ou adicione uma superfície normal se quiser
+		var normal = (global_position - area.global_position).normalized()
+		handle_wall_collision(normal)
+		return
+
 func handle_wall_collision(normal: Vector2):
 	bounce_count += 1
 	print("Rebote #", bounce_count, " Normal:", normal)
@@ -77,11 +90,11 @@ func handle_wall_collision(normal: Vector2):
 
 func _on_body_entered(body):
 	print("Body entered: ", body.name)
-	
+
 	# Se for uma parede, calcule o rebote
 	if body.name == "wall" or "Wall" in body.name or body is TileMap or "TileMap" in body.name:
 		print("Colidiu com parede: ", body.name)
-		
+
 		# Primeiro tenta usar o raycast para obter a normal correta
 		if wall_ray.is_colliding():
 			handle_wall_collision(wall_ray.get_collision_normal())
@@ -89,9 +102,8 @@ func _on_body_entered(body):
 			# Fallback: usa uma aproximação da normal baseada nas posições
 			var approximated_normal = (global_position - body.global_position).normalized()
 			handle_wall_collision(approximated_normal)
-		
 		return
-	
+
 	# Verifica se é o jogador
 	if body.is_in_group("player"):
 		if not is_moving:
