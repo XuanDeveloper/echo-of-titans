@@ -97,16 +97,11 @@ func shoot():
 	if projectile_scene and can_shoot:
 		var projectile = projectile_scene.instantiate()
 		
-		# Posiciona o projétil um pouco acima do player (saindo da “cabeça”)
-		var head_offset = Vector2(0, -20)
-		var spawn_pos = global_position + head_offset
-		projectile.global_position = spawn_pos
+		var head_offset = Vector2(0, -20)  # ajuste para sair da cabeçaAdd commentMore actions
+		projectile.global_position = global_position + head_offset
 		
-		# Chama o método shoot(stage_pos, direção) no script do projétil
-		# (o script do projétil deve definir velocity a partir de “direction” internamente)
-		var aim_dir = (get_global_mouse_position() - spawn_pos).normalized()
-		projectile.shoot(spawn_pos, aim_dir)
-		projectile.player = self  # passa referência para o player
+		projectile.direction = (get_global_mouse_position() - projectile.global_position).normalized()
+		projectile.player = self  # passa referência do player para o projétil
 		
 		get_tree().current_scene.add_child(projectile)
 		
