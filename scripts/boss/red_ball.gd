@@ -2,7 +2,7 @@ extends Area2D
 
 enum State { IDLE, ATTACK, RETURN }
 
-@export var speed: float = 0
+@export var speed: float = 250
 @export var home_offset: Vector2 = Vector2(50, 0)
 @export var overshoot_distance: float = 80.0
 @export var max_repel_strength: float = 1800.0
@@ -19,7 +19,7 @@ var attacks_to_do: int = 1
 var attacks_done: int = 0
 var target_position: Vector2
 
-var speed_by_difficulty = [0, 275.0, 300.0, 350.0, 390.0, 420.0, 480.0] # Para dificuldade 1 a 7
+var speed_by_difficulty = [250, 275.0, 300.0, 350.0, 390.0, 420.0, 480.0] # Para dificuldade 1 a 7
 var scale_by_difficulty = [1.75, 1.90, 2.05, 2.10, 2.15, 2.25, 2.45]
 var radius_by_difficulty = [160.0, 195.0, 230.0, 265.0, 300.0, 350.0, 410.0] # Exemplo: ajuste como quiser
 

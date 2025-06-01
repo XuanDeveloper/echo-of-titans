@@ -45,18 +45,29 @@ func _physics_process(delta):
 				if dist < gravity_radius:
 					var force = (gravity_radius - dist) / gravity_radius
 					var repel_strength = lerp(0.0, max_strength, force)
-					velocity += to_head.normalized() * repel_strength * delta
-
+					var boss_pos = redball.boss_ref.global_position
+					var to_boss = (boss_pos - global_position).normalized()
+					var alignment = to_head.normalized().dot(to_boss)
+					if alignment > 0.7:
+						var lateral = Vector2(-to_boss.y, to_boss.x).normalized()
+						var mix = 0.6
+						var safe_dir = (to_head.normalized() * mix + lateral * (1.0 - mix)).normalized()
+						velocity += safe_dir * repel_strength * delta
+					else:
+						velocity += to_head.normalized() * repel_strength * delta
+			
 			if area.is_in_group("blue_gravity_field"):
 				var blueball = area.get_parent()
-				var to_ball = area.global_position - global_position	# INVERTIDO!
-				var dist = to_ball.length()
+				var dist = (area.global_position - global_position).length()
 				var gravity_radius = area.get_node("CollisionShape2D").shape.radius
 				var max_strength = blueball.max_attract_strength
+				var boss_pos = blueball.boss_ref.global_position
 				if dist < gravity_radius:
 					var force = (gravity_radius - dist) / gravity_radius
 					var attract_strength = lerp(0.0, max_strength, force)
-					velocity += to_ball.normalized() * attract_strength * delta
+					# Sempre joga para o lado oposto ao boss!
+					var away_from_boss = (global_position - boss_pos).normalized()
+					velocity += away_from_boss * attract_strength * delta
 
 		update_raycast()
 		wall_ray.force_raycast_update()
@@ -65,11 +76,34 @@ func _physics_process(delta):
 		if wall_ray.is_colliding():
 			handle_wall_collision(wall_ray.get_collision_normal())
 		
-		# Aplica fricção e move o projétil
+		# Aplica fricção ao projétil
 		velocity = velocity.move_toward(Vector2.ZERO, friction * delta)
-		position += velocity * delta
-		
-		# Verifica se está muito lento
+
+		# Calcula o próximo passo/movimento
+		var motion = velocity * delta
+
+		# Raycast comprimento sempre suficiente!
+		var buffer: float = 20.0
+		if $CollisionShape2D.shape is CircleShape2D:
+			buffer = max(20.0, $CollisionShape2D.shape.radius)
+		var ray_length: float = motion.length() + buffer
+		if motion.length() > 0:
+			wall_ray.target_position = motion.normalized() * ray_length
+			wall_ray.force_raycast_update()
+			
+			if wall_ray.is_colliding():
+				var collision_point = wall_ray.get_collision_point()
+				var dist_to_collision = collision_point.distance_to(global_position)
+				if dist_to_collision <= ray_length:
+					# Move só até o ponto de contato da parede!
+					var move_vec = collision_point - global_position
+					position += move_vec.normalized() * max(0, dist_to_collision - 1) # -1 extra para não encostar demais
+					handle_wall_collision(wall_ray.get_collision_normal())
+					return  # Pára aqui! Não faz mais nada nesse frame
+		# Se não bateu, move normalmente
+		position += motion
+
+		# Parar se muito lento
 		if velocity.length() < 10:
 			print("Projétil parou devido à velocidade baixa")
 			is_moving = false
