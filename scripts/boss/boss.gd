@@ -40,13 +40,17 @@ func spawn_balls():
 	red_ball.home_offset = Vector2(-50, 0)
 	get_parent().call_deferred("add_child", red_ball)
 	balls.append(red_ball)
+	for bola in balls:
+		bola.set_difficulty(dificuldade)
 
 func _on_shield_hit():
 	dificuldade += 1
+	update_balls_difficulty()
 	print("Escudo tomou hit, dificuldade = ", dificuldade)
 
 func _on_shield_broken():
 	dificuldade += 1
+	update_balls_difficulty()
 	print("Escudo quebrou! Dificuldade = ", dificuldade)
 
 func _on_attack_timer():
@@ -57,3 +61,7 @@ func _on_attack_timer():
 	if balls.size() >= 2:
 		balls[1].trigger_attack(dificuldade)
 	# dificuldade só aumenta se você quiser (automatize depois se desejar)
+
+func update_balls_difficulty():
+	for bola in balls:
+		bola.set_difficulty(dificuldade)

@@ -15,6 +15,9 @@ var attacks_to_do: int = 1
 var attacks_done: int = 0
 var target_position: Vector2
 
+var speed_by_difficulty = [250.0, 275.0, 300.0, 350.0, 390.0, 420.0, 480.0] # para dificuldade 1 a 7
+var scale_by_difficulty = [1.75, 1.90, 2.05, 2.10, 2.15, 2.25, 2.45]
+
 func _ready():
 	assert(boss_ref != null)
 	player_ref = boss_ref.player_ref
@@ -78,3 +81,9 @@ func _physics_process(delta):
 				go_idle()
 			else:
 				global_position += direction.normalized() * speed * delta
+
+func set_difficulty(diff: int):
+	var idx = clamp(diff - 1, 0, speed_by_difficulty.size() - 1)
+	speed = speed_by_difficulty[idx]
+	scale = Vector2.ONE * scale_by_difficulty[idx]
+	print("Alterando dificuldade da bola. Dificuldade:", diff, "Speed:", speed, "Scale:", scale)
