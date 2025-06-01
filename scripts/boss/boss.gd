@@ -41,7 +41,7 @@ func spawn_balls():
 	get_parent().call_deferred("add_child", red_ball)
 	balls.append(red_ball)
 	for bola in balls:
-		bola.set_difficulty(dificuldade)
+		bola.call_deferred("set_difficulty", dificuldade)
 
 func _on_shield_hit():
 	dificuldade += 1

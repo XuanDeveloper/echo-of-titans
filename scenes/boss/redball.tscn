@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://dr85s0e2ysk0y"]
+[gd_scene load_steps=12 format=3 uid="uid://dr85s0e2ysk0y"]
 
 [ext_resource type="Script" path="res://scripts/boss/red_ball.gd" id="1_iuwq2"]
 [ext_resource type="Texture2D" uid="uid://d001qtfjk0uyc" path="res://assets/sprites/boss/RedBall-spritesheet.png" id="1_t3cv8"]
@@ -54,9 +54,12 @@ animations = [{
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_urjqj"]
-radius = 11.0
+radius = 12.0416
 
-[node name="Redball" type="Area2D"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_qop4y"]
+radius = 29.0
+
+[node name="Redball" type="Area2D" groups=["red_gravity"]]
 top_level = true
 script = ExtResource("1_iuwq2")
 
@@ -68,3 +71,8 @@ animation = &"idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_urjqj")
+
+[node name="GravityField" type="Area2D" parent="." groups=["red_gravity_field"]]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GravityField"]
+shape = SubResource("CircleShape2D_qop4y")

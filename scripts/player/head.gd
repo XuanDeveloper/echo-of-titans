@@ -34,6 +34,30 @@ func update_raycast():
 
 func _physics_process(delta):
 	if is_moving:
+		# NOVO — verifica efeito de todas as RedBall em volta neste frame
+		for area in get_overlapping_areas():
+			if area.is_in_group("red_gravity_field"):
+				var redball = area.get_parent()
+				var to_head = global_position - area.global_position
+				var dist = to_head.length()
+				var gravity_radius = area.get_node("CollisionShape2D").shape.radius
+				var max_strength = redball.max_repel_strength
+				if dist < gravity_radius:
+					var force = (gravity_radius - dist) / gravity_radius
+					var repel_strength = lerp(0.0, max_strength, force)
+					velocity += to_head.normalized() * repel_strength * delta
+
+			if area.is_in_group("blue_gravity_field"):
+				var blueball = area.get_parent()
+				var to_ball = area.global_position - global_position	# INVERTIDO!
+				var dist = to_ball.length()
+				var gravity_radius = area.get_node("CollisionShape2D").shape.radius
+				var max_strength = blueball.max_attract_strength
+				if dist < gravity_radius:
+					var force = (gravity_radius - dist) / gravity_radius
+					var attract_strength = lerp(0.0, max_strength, force)
+					velocity += to_ball.normalized() * attract_strength * delta
+
 		update_raycast()
 		wall_ray.force_raycast_update()
 		

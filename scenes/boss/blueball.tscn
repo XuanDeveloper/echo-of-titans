@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://epvhqgt6qf3a"]
+[gd_scene load_steps=12 format=3 uid="uid://epvhqgt6qf3a"]
 
 [ext_resource type="Script" path="res://scripts/boss/blue_ball.gd" id="1_ka1r8"]
 [ext_resource type="Texture2D" uid="uid://sq01ghhahn3l" path="res://assets/sprites/boss/BlueBall-spritesheet.png" id="1_xh63j"]
@@ -56,6 +56,9 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_h2f74"]
 radius = 11.0454
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_t8wfh"]
+radius = 29.0
+
 [node name="Blueball" type="Area2D"]
 top_level = true
 script = ExtResource("1_ka1r8")
@@ -68,3 +71,8 @@ animation = &"idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_h2f74")
+
+[node name="GravityField" type="Area2D" parent="." groups=["blue_gravity_field"]]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GravityField"]
+shape = SubResource("CircleShape2D_t8wfh")
