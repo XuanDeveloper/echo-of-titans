@@ -11,5 +11,6 @@ func _ready():
 func _on_body_entered(body: Node) -> void:
 	print("Colidiu com algo: ", body.name)
 	if body.is_in_group("player"):
+		boss.activate()
 		print("Player colidiu com o gatilho!")
 		wall_move.enabled = true

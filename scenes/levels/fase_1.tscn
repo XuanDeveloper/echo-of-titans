@@ -509,7 +509,7 @@ metadata/_edit_horizontal_guides_ = [-1084.0]
 
 [node name="Boss" parent="." instance=ExtResource("1_kow2a")]
 top_level = true
-position = Vector2(522, -859)
+position = Vector2(558, -838)
 scale = Vector2(1.5, 1.5)
 player_path = NodePath("../Player")
 
