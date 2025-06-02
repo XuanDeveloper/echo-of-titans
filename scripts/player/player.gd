@@ -1,19 +1,29 @@
 extends CharacterBody2D 
 
-enum PlayerState { IDLE, RUN, DASH, ATTACK }
+enum PlayerState { IDLE, RUN, DASH, ATTACK, HIT }
 
 @export var projectile_scene: PackedScene
 var state: int = PlayerState.IDLE
 @onready var animation := $AnimatedSprite2D 
 var can_shoot: bool = true
 
-var speed: float = 400.0
+var speed: float = 250.0
 var dash_speed: float = 700.0
 var dash_duration: float = 0.2
 var dash_timer: float = 0.0
 var dash_cooldown: float = 1.0
 var cooldown_timer: float = 0.0
 var dash_direction: Vector2 = Vector2.ZERO
+
+# 02/06 - Campos para o knockback
+var hit_duration: float = 0.15         # duração (em segundos) do hitstun
+var hit_timer: float = 0.0
+var hit_knockback_speed: float = 300.0
+
+# 02/06 - Campos para invencibilidade após sofrer dano
+var invincible_duration: float = 1.0    # 1 segundo de invencibilidade (ajuste conforme desejar)
+var invincible_timer: float = 0.0
+var invincible: bool = false            # flag que indica se o player está invencível
 
 # Guarda a última direção válida em que o player se moveu
 var last_facing: Vector2 = Vector2.RIGHT
@@ -23,13 +33,29 @@ func _ready():
 	animation.play("Idle")
 
 func _physics_process(delta: float) -> void:
-	# Atualiza cooldown do dash
 	if cooldown_timer > 0.0:
 		cooldown_timer -= delta
 		if cooldown_timer < 0.0:
 			cooldown_timer = 0.0
-
-	# Se estiver atacando, sai imediatamente
+	if invincible:
+		invincible_timer -= delta
+		if invincible_timer <= 0.0:
+			invincible = false
+			invincible_timer = 0.0
+	if state == PlayerState.HIT:
+		hit_timer -= delta
+		if hit_timer <= 0.0:
+			# Quando o hitstun termina, volta para IDLE (ou RUN se estiver se movendo)
+			if velocity.length() > 0.0:
+				state = PlayerState.RUN
+				animation.play("Run")
+			else:
+				state = PlayerState.IDLE
+				animation.play("Idle")
+		else:
+			# Enquanto hit_timer > 0, mantém a velocidade de knockback
+			move_and_slide()
+		return  # não processa nenhuma outra entrada enquanto estiver em HIT
 	if state == PlayerState.ATTACK:
 		return
 	
@@ -39,10 +65,8 @@ func _physics_process(delta: float) -> void:
 		PlayerState.DASH:
 			process_dash(delta)
 		
-	# Aplica movimento físico do CharacterBody2D
 	move_and_slide()
 	
-	# Input de disparo de projétil
 	if Input.is_action_just_pressed("Shoot") and state != PlayerState.ATTACK and can_shoot:
 		shoot()
 
@@ -92,12 +116,13 @@ func process_dash(delta: float) -> void:
 	if dash_timer <= 0.0:
 		state = PlayerState.IDLE
 		velocity = Vector2.ZERO
+	# Durante o dash, o move_and_slide já ocorre em _physics_process
 
 func shoot():
 	if projectile_scene and can_shoot:
 		var projectile = projectile_scene.instantiate()
 		
-		var head_offset = Vector2(0, -20)  # ajuste para sair da cabeçaAdd commentMore actions
+		var head_offset = Vector2(0, -20)  # ajuste para sair da cabeça
 		projectile.global_position = global_position + head_offset
 		
 		projectile.direction = (get_global_mouse_position() - projectile.global_position).normalized()
@@ -122,3 +147,33 @@ func shoot():
 
 func recover_projectile():
 	can_shoot = true
+# 02/06 - Novo método para aplicar knockback + invencibilidade
+func apply_knockback(from_position: Vector2) -> void:
+	# 1) Se estiver em DASH, ignora (intangível por causa do dash)
+	if state == PlayerState.DASH:
+		return
+
+	# 2) Se já estiver invencível, ignora (não toma dano/knockback de novo)
+	if invincible:
+		return
+
+	# 3) Aplica o knockback (calcula direção e velocidade)
+	var dir := (global_position - from_position).normalized()
+	velocity = dir * hit_knockback_speed
+
+	# 4) Entra em estado HIT e seta o timer de hitstun
+	state = PlayerState.HIT
+	hit_timer = hit_duration
+
+	# 5) Inicia invencibilidade
+	invincible = true
+	invincible_timer = invincible_duration
+
+	# 6) Toca a animação “Hurt” (certifique-se de que existe no SpriteFrames)
+	if animation.sprite_frames.has_animation("Hurt"):
+		animation.play("Hurt")
+	else:
+		push_warning("Animação 'Hurt' não encontrada em AnimatedSprite2D; verifique o nome no SpriteFrames.")
+
+	# (Opcional) Dar feedback visual de invencibilidade, ex.:
+	# animation.modulate = Color(1, 1, 1, 0.5)  # semitransparente enquanto invencível

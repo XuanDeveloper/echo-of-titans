@@ -12,7 +12,6 @@ var bounce_count: int = 0
 
 func _ready():
 	connect("area_entered", _on_area_entered)
-	# Garantir que os sinais estão conectados
 	if not is_connected("body_entered", _on_body_entered):
 		connect("body_entered", _on_body_entered)
 	

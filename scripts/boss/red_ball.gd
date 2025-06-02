@@ -25,6 +25,10 @@ var radius_by_difficulty = [160.0, 195.0, 230.0, 265.0, 300.0, 350.0, 410.0] # E
 
 func _ready():
 	add_to_group("red_gravity")
+	# Conecta o sinal de colisão com corpos para detectar o Player:
+	if not is_connected("body_entered", Callable(self, "_on_body_entered")):
+		connect("body_entered", Callable(self, "_on_body_entered"))
+
 	assert(boss_ref != null)
 	player_ref = boss_ref.player_ref
 	animation.play("idle")
@@ -97,3 +101,10 @@ func set_difficulty(diff: int):
 	scale = Vector2.ONE * scale_by_difficulty[idx]
 	set_gravity_radius(radius_by_difficulty[idx])
 	print("Alterando dificuldade da bola. Dificuldade:", diff, "Speed:", speed, "Scale:", scale, "Gravity radius:", radius_by_difficulty[idx])
+func _on_body_entered(body):
+	# Se colidir com o Player (que está em grupo "player") e não estiver em Dash, aplica knockback
+	if body.is_in_group("player"):
+		# Chama o método do player para aplicar knockback, passando a posição desta RedBall
+		body.apply_knockback(global_position)
+		# (Se quiser dar “dano” ou efeitos adicionais, faça aqui)
+		# Exemplo: body.take_damage(1) 

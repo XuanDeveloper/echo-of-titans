@@ -1,10 +1,11 @@
-[gd_scene load_steps=27 format=3 uid="uid://dt5r4t12ju1us"]
+[gd_scene load_steps=34 format=3 uid="uid://dt5r4t12ju1us"]
 
 [ext_resource type="Script" path="res://scripts/player/player.gd" id="1_m166b"]
 [ext_resource type="PackedScene" uid="uid://dnus0mf8eekit" path="res://scenes/player/head.tscn" id="2_oqhy5"]
 [ext_resource type="Texture2D" uid="uid://dbi5p6y86dmdy" path="res://assets/sprites/ATTACK 1.png" id="2_vmisn"]
 [ext_resource type="Texture2D" uid="uid://nfme28vly5hf" path="res://assets/sprites/RUN.png" id="4_dxovg"]
 [ext_resource type="Texture2D" uid="uid://4uslso4iyf1a" path="res://assets/sprites/player/skeleton-idle.png" id="4_fedv8"]
+[ext_resource type="Texture2D" uid="uid://can2veoj2tf6m" path="res://assets/sprites/player/skeleton-idle-nohead.png" id="5_hl5hp"]
 [ext_resource type="Texture2D" uid="uid://dd7yrcl5vxvqj" path="res://assets/sprites/player/skeleton-walk.png" id="5_rehqe"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_3jnps"]
@@ -38,6 +39,30 @@ region = Rect2(576, 0, 96, 96)
 [sub_resource type="AtlasTexture" id="AtlasTexture_l40u1"]
 atlas = ExtResource("4_dxovg")
 region = Rect2(872, 0, 109, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g8kyt"]
+atlas = ExtResource("5_hl5hp")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mkd5k"]
+atlas = ExtResource("5_hl5hp")
+region = Rect2(48, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_va4ly"]
+atlas = ExtResource("5_hl5hp")
+region = Rect2(96, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oy4i8"]
+atlas = ExtResource("5_hl5hp")
+region = Rect2(144, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qxtou"]
+atlas = ExtResource("5_hl5hp")
+region = Rect2(192, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i6qfy"]
+atlas = ExtResource("5_hl5hp")
+region = Rect2(240, 0, 48, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_fwhrc"]
 atlas = ExtResource("4_fedv8")
@@ -117,6 +142,29 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_g8kyt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mkd5k")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_va4ly")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oy4i8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qxtou")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i6qfy")
+}],
+"loop": true,
+"name": &"Hurt",
+"speed": 15.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_fwhrc")
 }, {
 "duration": 1.0,
@@ -167,10 +215,8 @@ projectile_scene = ExtResource("2_oqhy5")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_ph422")
-animation = &"Run"
+animation = &"Hurt"
 autoplay = "Idle"
-frame = 1
-frame_progress = 0.581619
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 15)
