@@ -59,7 +59,7 @@ radius = 12.0416
 [sub_resource type="CircleShape2D" id="CircleShape2D_qop4y"]
 radius = 29.0
 
-[node name="Redball" type="Area2D" groups=["red_gravity"]]
+[node name="Redball" type="Area2D" groups=["ball_red", "red_gravity"]]
 top_level = true
 script = ExtResource("1_iuwq2")
 

@@ -6,6 +6,7 @@ enum PlayerState { IDLE, RUN, DASH, ATTACK, HIT }
 var state: int = PlayerState.IDLE
 @onready var animation := $AnimatedSprite2D 
 var can_shoot: bool = true
+var life: bool = true
 
 var speed: float = 250.0
 var dash_speed: float = 600.0
@@ -139,6 +140,11 @@ func recover_projectile():
 	can_shoot = true
 func drop_head_on_hit() -> void:
 	call_deferred("_drop_head_deferred")
+
+func _on_area_entered(area: Area2D) -> void:
+	if area.is_in_group("ball_blue"):
+		life = false
+		print("Contato com ball_blue detectado!")
 
 func _drop_head_deferred() -> void:
 	if projectile_scene == null:
