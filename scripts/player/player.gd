@@ -7,7 +7,7 @@ var state: int = PlayerState.IDLE
 @onready var animation := $AnimatedSprite2D 
 var can_shoot: bool = true
 
-var speed: float = 400.0
+var speed: float = 230.0
 var dash_speed: float = 700.0
 var dash_duration: float = 0.2
 var dash_timer: float = 0.0
@@ -18,23 +18,28 @@ var dash_direction: Vector2 = Vector2.ZERO
 # Guarda a última direção válida em que o player se moveu
 var last_facing: Vector2 = Vector2.RIGHT
 
+var vida: int = 1
+var sem_cabeca: bool = false
+var morto: bool = false
+
 func _ready():
 	add_to_group("player")
 	animation.play("Idle")
 
 func _physics_process(delta: float) -> void:
+	if morto:
+		velocity = Vector2.ZERO
+		return
+	
 	# Atualiza cooldown do dash
 	if cooldown_timer > 0.0:
 		cooldown_timer -= delta
 		if cooldown_timer < 0.0:
 			cooldown_timer = 0.0
 
-	# Se estiver atacando, sai imediatamente
-	if state == PlayerState.ATTACK:
-		return
-	
+	# Permite movimento mesmo sem cabeça
 	match state:
-		PlayerState.IDLE, PlayerState.RUN:
+		PlayerState.IDLE, PlayerState.RUN, PlayerState.ATTACK:
 			process_movement(delta)
 		PlayerState.DASH:
 			process_dash(delta)
@@ -43,7 +48,7 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 	
 	# Input de disparo de projétil
-	if Input.is_action_just_pressed("Shoot") and state != PlayerState.ATTACK and can_shoot:
+	if Input.is_action_just_pressed("Shoot") and not sem_cabeca and can_shoot:
 		shoot()
 
 func process_movement(delta: float) -> void:
@@ -52,37 +57,32 @@ func process_movement(delta: float) -> void:
 		Input.get_action_strength("Down") - Input.get_action_strength("Up")
 	).normalized()
 	
-	# Atualiza velocidade de corrida
 	velocity = input_vector * speed
 	
 	if input_vector != Vector2.ZERO:
-		# Está correndo
 		state = PlayerState.RUN
-		animation.play("Run")
-
-		# Atualiza flip horizontal caso precise
+		if sem_cabeca:
+			animation.play("run_nohead")
+		else:
+			animation.play("Run")
 		if input_vector.x != 0.0:
 			animation.flip_h = input_vector.x < 0.0
-
-		# Guarda esta direção como a última válida
 		last_facing = input_vector.normalized()
 	else:
-		# Parado
 		state = PlayerState.IDLE
-		animation.play("Idle")
+		if sem_cabeca:
+			animation.play("idle_nohead")
+		else:
+			animation.play("Idle")
 	
-	# Se apertou dash e não estiver em cooldown
 	if Input.is_action_just_pressed("dash") and cooldown_timer <= 0.0:
 		animation.play("Dash")
 		state = PlayerState.DASH
 		dash_timer = dash_duration
-
-		# Se houver input de movimento, dash nessa direção; senão, usa last_facing
 		if input_vector != Vector2.ZERO:
 			dash_direction = input_vector.normalized()
 		else:
 			dash_direction = last_facing
-
 		velocity = dash_direction * dash_speed
 		cooldown_timer = dash_cooldown
 
@@ -97,7 +97,7 @@ func shoot():
 	if projectile_scene and can_shoot:
 		var projectile = projectile_scene.instantiate()
 		
-		var head_offset = Vector2(0, -20)  # ajuste para sair da cabeçaAdd commentMore actions
+		var head_offset = Vector2(0, -20)  # ajuste para sair da cabeça
 		projectile.global_position = global_position + head_offset
 		
 		projectile.direction = (get_global_mouse_position() - projectile.global_position).normalized()
@@ -108,17 +108,28 @@ func shoot():
 		# Ajusta flags de ataque/animação
 		can_shoot = false
 		state = PlayerState.ATTACK
-		animation.play("Attack")
+		sem_cabeca = true # Agora está sem cabeça
+		# Troca para animação sem cabeça
+		if velocity.length() > 0.0:
+			animation.play("run_nohead")
+		else:
+			animation.play("idle_nohead")
 
 		await animation.animation_finished
-		
-		# Após o ataque, volta para Run ou Idle
-		if velocity.length() > 0.0:
-			state = PlayerState.RUN
-			animation.play("Run")
-		else:
-			state = PlayerState.IDLE
-			animation.play("Idle")
 
 func recover_projectile():
 	can_shoot = true
+	sem_cabeca = false # Recuperou a cabeça
+	# Volta para animação normal com cabeça
+	if velocity.length() > 0.0:
+		animation.play("Run")
+	else:
+		animation.play("Idle")
+
+func levar_ataque():
+	if sem_cabeca and not morto:
+		vida = 0
+		morto = true
+		animation.play("morte") # Troque para o nome da animação de morte se houver
+		velocity = Vector2.ZERO
+		set_physics_process(false) # Para tudo
