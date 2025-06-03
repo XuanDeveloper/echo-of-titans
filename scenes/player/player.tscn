@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://dt5r4t12ju1us"]
+[gd_scene load_steps=45 format=3 uid="uid://dt5r4t12ju1us"]
 
 [ext_resource type="Script" path="res://scripts/player/player.gd" id="1_m166b"]
 [ext_resource type="PackedScene" uid="uid://dnus0mf8eekit" path="res://scenes/player/head.tscn" id="2_oqhy5"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://4uslso4iyf1a" path="res://assets/sprites/player/skeleton-idle.png" id="4_fedv8"]
 [ext_resource type="Texture2D" uid="uid://can2veoj2tf6m" path="res://assets/sprites/player/skeleton-idle-nohead.png" id="5_hl5hp"]
 [ext_resource type="Texture2D" uid="uid://dd7yrcl5vxvqj" path="res://assets/sprites/player/skeleton-walk.png" id="5_rehqe"]
+[ext_resource type="Texture2D" uid="uid://c1q4dp55pnbyg" path="res://assets/sprites/player/skeleton-walk-nohead.png" id="8_5colu"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_3jnps"]
 atlas = ExtResource("2_vmisn")
@@ -88,6 +89,30 @@ region = Rect2(192, 0, 48, 48)
 atlas = ExtResource("4_fedv8")
 region = Rect2(240, 0, 48, 48)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_2q10n"]
+atlas = ExtResource("5_hl5hp")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3u4tl"]
+atlas = ExtResource("5_hl5hp")
+region = Rect2(48, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jft56"]
+atlas = ExtResource("5_hl5hp")
+region = Rect2(96, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tsdaj"]
+atlas = ExtResource("5_hl5hp")
+region = Rect2(144, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_igy86"]
+atlas = ExtResource("5_hl5hp")
+region = Rect2(192, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_100qm"]
+atlas = ExtResource("5_hl5hp")
+region = Rect2(240, 0, 48, 48)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_oile3"]
 atlas = ExtResource("5_rehqe")
 region = Rect2(0, 0, 48, 48)
@@ -102,6 +127,22 @@ region = Rect2(96, 0, 48, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_1v5en"]
 atlas = ExtResource("5_rehqe")
+region = Rect2(144, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ixk5d"]
+atlas = ExtResource("8_5colu")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_efl8o"]
+atlas = ExtResource("8_5colu")
+region = Rect2(48, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_opgel"]
+atlas = ExtResource("8_5colu")
+region = Rect2(96, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_drmgo"]
+atlas = ExtResource("8_5colu")
 region = Rect2(144, 0, 48, 48)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_ph422"]
@@ -188,6 +229,29 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_2q10n")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3u4tl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jft56")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tsdaj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_igy86")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_100qm")
+}],
+"loop": true,
+"name": &"Idle2",
+"speed": 15.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_oile3")
 }, {
 "duration": 1.0,
@@ -202,6 +266,23 @@ animations = [{
 "loop": true,
 "name": &"Run",
 "speed": 15.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ixk5d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_efl8o")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_opgel")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_drmgo")
+}],
+"loop": true,
+"name": &"Run_nohead",
+"speed": 15.0
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fc2bp"]
@@ -215,7 +296,7 @@ projectile_scene = ExtResource("2_oqhy5")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_ph422")
-animation = &"Hurt"
+animation = &"Idle2"
 autoplay = "Idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
