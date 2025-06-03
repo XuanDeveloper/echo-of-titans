@@ -14,14 +14,19 @@ func _ready():
 	update_frame()
 
 func hit():
-	if lives <= 0:
-		return
-	lives -= 1
-	update_frame()
-	emit_signal("shield_hit")
-	if lives == 0:
-		emit_signal("shield_broken")
-		queue_free()
+	if lives > 0:
+		lives -= 1
+		update_frame()
+		emit_signal("shield_hit")
+		if lives == 0:
+			emit_signal("shield_broken")
+			if sprite_ref:
+				sprite_ref.visible = false
+			# NÃO desative a colisão!
+	else:
+		# Já quebrou, mas ainda pode tomar o hit fatal!
+		print("Shield já quebrado, acertando boss!")
+		emit_signal("shield_hit")
 
 func update_frame():
 	if sprite_ref:

@@ -19,9 +19,9 @@ var attacks_to_do: int = 1
 var attacks_done: int = 0
 var target_position: Vector2
 
-var speed_by_difficulty = [250, 275.0, 300.0, 350.0, 390.0, 420.0, 480.0] # Para dificuldade 1 a 7
-var scale_by_difficulty = [1.75, 1.90, 2.05, 2.10, 2.15, 2.25, 2.45]
-var radius_by_difficulty = [160.0, 195.0, 230.0, 265.0, 300.0, 350.0, 410.0]
+var speed_by_difficulty = [250, 275.0, 295.0, 315.0, 335.0, 345.0, 380.0] # Para dificuldade 1 a 7
+var scale_by_difficulty = [1.75, 1.85, 1.90, 2.0, 2.10, 2.15, 2.25]
+var radius_by_difficulty = [160.0, 175.0, 200.0, 215.0, 245.0, 265.0, 295.0] # Exemplo: ajuste como quiser
 
 func _ready():
 	add_to_group("blue_gravity")

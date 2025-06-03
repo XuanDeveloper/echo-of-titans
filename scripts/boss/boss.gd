@@ -56,11 +56,38 @@ func _on_shield_hit():
 	dificuldade += 1
 	update_balls_difficulty()
 	print("Escudo tomou hit, dificuldade = ", dificuldade)
+	if dificuldade >= 8:
+		die()
 
 func _on_shield_broken():
-	dificuldade += 1
-	update_balls_difficulty()
-	print("Escudo quebrou! Dificuldade = ", dificuldade)
+	# Não aumenta dificuldade aqui, ela já aumenta pelo hit!
+	print("Escudo quebrou! (fica invisível)")
+
+func die():
+	print("Boss derrotado!")
+
+	# Para o timer de ataque do boss.
+	if ball_timer:
+		ball_timer.stop()
+
+	# Para e REMOVE TODAS as bolas
+	for bola in balls:
+		if bola.has_method("go_idle"):
+			bola.go_idle()
+		bola.queue_free() # <--- LINHA NOVA
+
+	# Treme o boss visualmente (shake simples, pode melhorar isso depois)
+	var shake_tween = get_tree().create_tween()
+	var original_pos = position
+	for i in range(10):
+		shake_tween.tween_property(self, "position", original_pos + Vector2(randi_range(-8,8), randi_range(-8,8)), 0.04)
+		shake_tween.tween_property(self, "position", original_pos, 0.04)
+
+	# Quando terminar o tween (tremor), remove o boss/mata/oculta
+	shake_tween.tween_callback(Callable(self, "_on_boss_disappear"))
+
+func _on_boss_disappear():
+	get_tree().quit()
 
 func _on_attack_timer():
 	print("Disparando ataque! Dificuldade atual: ", dificuldade)
