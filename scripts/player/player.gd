@@ -1,6 +1,6 @@
 extends CharacterBody2D 
 
-enum PlayerState { IDLE, RUN, DASH, ATTACK, HIT }
+enum PlayerState { IDLE, RUN, DASH, ATTACK, HIT, DEAD }
 
 @export var projectile_scene: PackedScene
 var state: int = PlayerState.IDLE
@@ -26,6 +26,11 @@ var invincible_duration: float = 1.0
 var invincible_timer: float = 0.0
 var invincible: bool = false
 
+# --- Campos para efeito visual de dano ---
+var red_effect_duration: float = 0.1  # Duração do efeito vermelho (milissegundos)
+var red_effect_timer: float = 0.0
+var is_red: bool = false
+
 # Guarda a última direção válida em que o player se moveu
 var last_facing: Vector2 = Vector2.RIGHT
 
@@ -34,16 +39,28 @@ func _ready():
 	play_idle_animation()
 
 func _physics_process(delta: float) -> void:
+	# Player morto não processa nada
+	if state == PlayerState.DEAD:
+		return
+		
 	if cooldown_timer > 0.0:
 		cooldown_timer -= delta
 		if cooldown_timer < 0.0:
 			cooldown_timer = 0.0
 
+	# Gerencia invencibilidade
 	if invincible:
 		invincible_timer -= delta
 		if invincible_timer <= 0.0:
 			invincible = false
 			invincible_timer = 0.0
+
+	# Gerencia efeito vermelho
+	if is_red:
+		red_effect_timer -= delta
+		if red_effect_timer <= 0.0:
+			is_red = false
+			animation.modulate = Color.WHITE
 
 	if state == PlayerState.HIT:
 		hit_timer -= delta
@@ -92,8 +109,12 @@ func process_movement(delta: float) -> void:
 		state = PlayerState.IDLE
 		play_idle_animation()
 
+	# Só pode dar dash se tiver cabeça
 	if Input.is_action_just_pressed("dash") and cooldown_timer <= 0.0 and can_shoot:
-		animation.play("Dash")
+		if can_shoot:
+			animation.play("Dash")
+		else:
+			animation.play("Dash_nohead")
 		state = PlayerState.DASH
 		dash_timer = dash_duration
 
@@ -138,13 +159,48 @@ func shoot():
 
 func recover_projectile():
 	can_shoot = true
+
 func drop_head_on_hit() -> void:
 	call_deferred("_drop_head_deferred")
 
 func _on_area_entered(area: Area2D) -> void:
-	if area.is_in_group("ball_blue"):
-		life = false
-		print("Contato com ball_blue detectado!")
+	# Verifica se foi atingido por ball_blue ou ball_red
+	if area.is_in_group("ball_blue") or area.is_in_group("ball_red"):
+		# Se não tem cabeça (can_shoot = false), morre instantaneamente
+		if not can_shoot:
+			die()
+		else:
+			# Se tem cabeça, aplica knockback normal
+			apply_knockback(area.global_position)
+
+func die():
+	if state == PlayerState.DEAD:
+		return
+		
+	life = false
+	state = PlayerState.DEAD
+	velocity = Vector2.ZERO
+	
+	# Toca animação de morte se existir
+	if animation.sprite_frames.has_animation("Death"):
+		animation.play("Death")
+	else:
+		# Se não tem animação de morte, usa idle sem cabeça
+		animation.play("Idle2")
+	
+	# Desabilita colisões
+	set_collision_layer_value(1, false)
+	set_collision_mask_value(1, false)
+	
+	print("Player morreu!")
+	
+	# Faz o player desaparecer gradualmente
+	var tween = create_tween()
+	tween.tween_property(self, "modulate", Color.TRANSPARENT, 0.5)
+	
+	# Aguarda um pouco e recomça a fase
+	await get_tree().create_timer(1.5).timeout
+	restart_level()
 
 func _drop_head_deferred() -> void:
 	if projectile_scene == null:
@@ -159,7 +215,7 @@ func _drop_head_deferred() -> void:
 	head.player = self
 
 func apply_knockback(from_position: Vector2) -> void:
-	if state == PlayerState.DASH:
+	if state == PlayerState.DASH or state == PlayerState.DEAD:
 		return
 
 	if invincible:
@@ -177,19 +233,40 @@ func apply_knockback(from_position: Vector2) -> void:
 
 	invincible = true
 	invincible_timer = invincible_duration
+	
+	# Ativa efeito vermelho por milissegundos
+	is_red = true
+	red_effect_timer = red_effect_duration
+	animation.modulate = Color.RED
 
 	if animation.sprite_frames.has_animation("Hurt"):
 		animation.play("Hurt")
 	else:
 		push_warning("Animação 'Hurt' não encontrada em AnimatedSprite2D.")
+
 func play_run_animation():
+	if state == PlayerState.DEAD:
+		return
+		
 	if can_shoot:
 		animation.play("Run")
 	else:
 		animation.play("Run_nohead")
 
 func play_idle_animation():
+	if state == PlayerState.DEAD:
+		return
+		
 	if can_shoot:
 		animation.play("Idle")
 	else:
 		animation.play("Idle2")
+
+func restart_level():
+	# Reinicia a cena atual
+	get_tree().reload_current_scene()
+
+func game_over():
+	# Função mantida caso queira usar futuramente
+	# get_tree().change_scene_to_file("res://GameOver.tscn")
+	pass
