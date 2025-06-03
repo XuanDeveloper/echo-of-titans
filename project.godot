@@ -25,7 +25,6 @@ window/stretch/aspect="expand"
 
 [global_group]
 
-ball_blue=""
 ball_red=""
 
 [input]

@@ -164,14 +164,38 @@ func drop_head_on_hit() -> void:
 	call_deferred("_drop_head_deferred")
 
 func _on_area_entered(area: Area2D) -> void:
-	# Verifica se foi atingido por ball_blue ou ball_red
 	if area.is_in_group("ball_blue") or area.is_in_group("ball_red"):
-		# Se não tem cabeça (can_shoot = false), morre instantaneamente
-		if not can_shoot:
-			die()
-		else:
-			# Se tem cabeça, aplica knockback normal
-			apply_knockback(area.global_position)
+		print("Player morreu ao encostar na bola!")
+		die_with_animation()
+		return
+
+	print("Colisão com: ", area.name, " | Grupos: ", area.get_groups())
+	if state == PlayerState.DEAD:
+		print("Ignorando colisão, player já está morto.")
+		return
+
+func die_with_animation():
+	if state == PlayerState.DEAD:
+		return
+		
+	life = false
+	state = PlayerState.DEAD
+	velocity = Vector2.ZERO
+	
+	# Desabilita colisões
+	set_collision_layer_value(1, false)
+	set_collision_mask_value(1, false)
+	
+	print("Player morreu!")
+	
+	# Toca animação de morte se existir
+	if animation.sprite_frames.has_animation("Death"):
+		animation.play("Death")
+		await animation.animation_finished
+	else:
+		await get_tree().create_timer(1.0).timeout
+	
+	game_over()
 
 func die():
 	if state == PlayerState.DEAD:
@@ -268,5 +292,5 @@ func restart_level():
 
 func game_over():
 	# Função mantida caso queira usar futuramente
-	# get_tree().change_scene_to_file("res://GameOver.tscn")
+	get_tree().change_scene_to_file("res://scenes/menus/death_menu.tscn")
 	pass
