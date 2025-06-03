@@ -23,6 +23,11 @@ window/size/viewport_height=720
 window/stretch/mode="viewport"
 window/stretch/aspect="expand"
 
+[global_group]
+
+ball_blue=""
+ball_red=""
+
 [input]
 
 ui_text_caret_word_right.macos={

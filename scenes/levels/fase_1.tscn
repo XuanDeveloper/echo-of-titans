@@ -758,6 +758,7 @@ tile_map_data = PackedByteArray("AAAgANr/AAABAAQAAAAhANr/AAACAAQAAAAiANr/AAADAAQ
 tile_set = SubResource("TileSet_ua841")
 
 [node name="wallTrigger" type="Area2D" parent="."]
+collision_mask = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="wallTrigger"]
 show_behind_parent = true
