@@ -643,7 +643,6 @@ horizontal_alignment = 2
 vertical_alignment = 1
 
 [node name="ground" type="TileMapLayer" parent="."]
-visible = false
 z_index = -2
 texture_filter = 1
 position = Vector2(-10, 16)

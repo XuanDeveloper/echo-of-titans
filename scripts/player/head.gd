@@ -159,7 +159,7 @@ func handle_wall_collision(normal: Vector2):
 	velocity = velocity.bounce(normal) * bounce_factor
 	
 	# Move um pouco para fora da colisão para não “grudar”
-	position += normal * 5
+	position += normal * 1
 	
 	print("Velocidade após rebote: ", velocity)
 	
