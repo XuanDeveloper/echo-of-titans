@@ -566,7 +566,7 @@ player_path = NodePath("../Player")
 
 [node name="Player" parent="." instance=ExtResource("1_sp2kx")]
 top_level = true
-position = Vector2(-313, 307)
+position = Vector2(-331, 317)
 platform_wall_layers = 1
 
 [node name="pause_menu" parent="." instance=ExtResource("5_2trjc")]

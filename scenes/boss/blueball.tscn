@@ -54,10 +54,10 @@ animations = [{
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_h2f74"]
-radius = 11.0454
+radius = 15.4255
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_t8wfh"]
-radius = 29.0
+radius = 34.1768
 
 [node name="Blueball" type="Area2D" groups=["ball_blue", "blue_gravity_field"]]
 top_level = true
@@ -68,11 +68,14 @@ texture_filter = 1
 scale = Vector2(0.75, 0.75)
 sprite_frames = SubResource("SpriteFrames_b3mik")
 animation = &"idle"
+frame_progress = 0.0128299
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." groups=["boll_blue"]]
+scale = Vector2(1.88, 1.88)
 shape = SubResource("CircleShape2D_h2f74")
 
 [node name="GravityField" type="Area2D" parent="." groups=["blue_gravity_field"]]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="GravityField"]
+scale = Vector2(1.2, 1.2)
 shape = SubResource("CircleShape2D_t8wfh")

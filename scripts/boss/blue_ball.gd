@@ -100,7 +100,6 @@ func set_difficulty(diff: int):
 	speed = speed_by_difficulty[idx]
 	scale = Vector2.ONE * scale_by_difficulty[idx]
 	set_gravity_radius(radius_by_difficulty[idx])
-	print("Alterando dificuldade da bola azul. Dificuldade:", diff, "Speed:", speed, "Scale:", scale, "Gravity radius:", radius_by_difficulty[idx])
 
 
 # 02/06 - Necessário para detectar colisão com o jogador

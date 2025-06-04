@@ -54,10 +54,10 @@ animations = [{
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_urjqj"]
-radius = 12.0416
+radius = 15.3514
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_qop4y"]
-radius = 29.0
+radius = 38.2099
 
 [node name="Redball" type="Area2D" groups=["ball_red", "red_gravity"]]
 top_level = true
@@ -68,8 +68,10 @@ texture_filter = 1
 scale = Vector2(0.75, 0.75)
 sprite_frames = SubResource("SpriteFrames_x266l")
 animation = &"idle"
+frame_progress = 0.0822454
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(1.76, 1.76)
 shape = SubResource("CircleShape2D_urjqj")
 
 [node name="GravityField" type="Area2D" parent="." groups=["red_gravity_field"]]

@@ -25,7 +25,6 @@ func hit():
 			# NÃO desative a colisão!
 	else:
 		# Já quebrou, mas ainda pode tomar o hit fatal!
-		print("Shield já quebrado, acertando boss!")
 		emit_signal("shield_hit")
 
 func update_frame():

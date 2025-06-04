@@ -100,7 +100,6 @@ func set_difficulty(diff: int):
 	speed = speed_by_difficulty[idx]
 	scale = Vector2.ONE * scale_by_difficulty[idx]
 	set_gravity_radius(radius_by_difficulty[idx])
-	print("Alterando dificuldade da bola. Dificuldade:", diff, "Speed:", speed, "Scale:", scale, "Gravity radius:", radius_by_difficulty[idx])
 func _on_body_entered(body):
 	# Se colidir com o Player (que está em grupo "player") e não estiver em Dash, aplica knockback
 	if body.is_in_group("player"):

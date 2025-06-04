@@ -312,7 +312,7 @@ projectile_scene = ExtResource("2_oqhy5")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." groups=["ball_blue"]]
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_ph422")
-animation = &"Death"
+animation = &"Idle2"
 autoplay = "Idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

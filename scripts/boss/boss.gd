@@ -11,6 +11,7 @@ var balls := []
 var player_ref: Node2D = null
 var activated: bool = false
 var ball_timer: Timer = null
+var shake_tween = create_tween()
 
 func _ready():
 	# NÃO FAZ NADA! (só ativa depois)
@@ -26,14 +27,13 @@ func activate():
 	if escudo:
 		escudo.connect("shield_hit", _on_shield_hit)
 		escudo.connect("shield_broken", _on_shield_broken)
-	
+
 	ball_timer = Timer.new()
 	ball_timer.wait_time = 2.0
 	ball_timer.one_shot = false
 	ball_timer.autostart = true
 	add_child(ball_timer)
 	ball_timer.timeout.connect(_on_attack_timer)
-	print("Boss ativado!")
 
 func spawn_balls():
 	var blue_ball = blue_ball_scene.instantiate()
@@ -49,23 +49,21 @@ func spawn_balls():
 	red_ball.home_offset = Vector2(-50, 0)
 	get_parent().call_deferred("add_child", red_ball)
 	balls.append(red_ball)
+
 	for bola in balls:
 		bola.call_deferred("set_difficulty", dificuldade)
 
 func _on_shield_hit():
 	dificuldade += 1
 	update_balls_difficulty()
-	print("Escudo tomou hit, dificuldade = ", dificuldade)
 	if dificuldade >= 8:
 		die()
 
 func _on_shield_broken():
+	return
 	# Não aumenta dificuldade aqui, ela já aumenta pelo hit!
-	print("Escudo quebrou! (fica invisível)")
 
 func die():
-	print("Boss derrotado!")
-
 	# Para o timer de ataque do boss.
 	if ball_timer:
 		ball_timer.stop()
@@ -74,23 +72,20 @@ func die():
 	for bola in balls:
 		if bola.has_method("go_idle"):
 			bola.go_idle()
-		bola.queue_free() # <--- LINHA NOVA
+		bola.queue_free()
 
-	# Treme o boss visualmente (shake simples, pode melhorar isso depois)
-	var shake_tween = get_tree().create_tween()
+	# Treme o boss visualmente antes de ir para a tela de game over
 	var original_pos = position
+	var shake_tween = create_tween()
 	for i in range(10):
 		shake_tween.tween_property(self, "position", original_pos + Vector2(randi_range(-8,8), randi_range(-8,8)), 0.04)
 		shake_tween.tween_property(self, "position", original_pos, 0.04)
-
-	# Quando terminar o tween (tremor), remove o boss/mata/oculta
 	shake_tween.tween_callback(Callable(self, "_on_boss_disappear"))
 
 func _on_boss_disappear():
-	get_tree().quit()
+	get_tree().change_scene_to_file("res://scenes/menus/death_menu.tscn")
 
 func _on_attack_timer():
-	print("Disparando ataque! Dificuldade atual: ", dificuldade)
 	if balls.size() >= 1:
 		balls[0].trigger_attack(dificuldade)
 		await get_tree().create_timer(0.5).timeout
